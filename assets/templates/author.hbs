@@ -1,0 +1,33 @@
+{{#if books}}
+    {{#each books}}
+        {{> book}}
+    {{/each}}
+{{/if}}
+    
+{{#if albums}}
+    {{#each albums}}
+        {{> album}}
+    {{/each}}
+{{/if}}
+
+
+{{!-- <div class="author">
+    <h2>{{name}}</h2>
+
+    {{#if books}}
+        <ul>
+        {{#each books}}
+            {{> book}}
+        {{/each}}
+        </ul>
+    {{/if}}
+    
+    {{#if albums}}
+        <ul>
+        {{#each albums}}
+            {{> album}}
+        {{/each}}
+        </ul>
+    {{/if}}
+
+</div> --}}

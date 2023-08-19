@@ -23,3 +23,8 @@ pub struct Author {
     pub cover: String,
     pub directory: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Library {
+    pub authors: Vec<Author>,
+}

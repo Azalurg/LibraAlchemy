@@ -2,7 +2,7 @@ use std::fs;
 use walkdir::WalkDir;
 use serde_json;
 
-use crate::structs::{Author, Album, Book};
+use crate::structs::{Author, Album, Book, Library};
 
 fn check_cover(path: String) -> String {
     if fs::metadata(&path).is_ok() {
@@ -85,7 +85,10 @@ pub fn scan(work_dir: &str, json_path: &str){
             }
         }
     }
+    let lib = Library {
+        authors: book_lib,
+    };
 
-    let json_data = serde_json::to_string_pretty(&book_lib).expect("Failed to serialize data to JSON");
+    let json_data = serde_json::to_string_pretty(&lib).expect("Failed to serialize data to JSON");
     std::fs::write(json_path, json_data).expect("Failed to write JSON data to file");
 }
