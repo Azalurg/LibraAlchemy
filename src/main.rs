@@ -1,15 +1,16 @@
 use std::fs;
-
 use walkdir::WalkDir;
+use serde::{Serialize, Deserialize};
+use serde_json;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Book {
     title: String,
     directory: String,
     cover: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Album {
     title: String,
     books: Vec<Book>,
@@ -17,7 +18,7 @@ struct Album {
     directory: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Author {
     name: String,
     albums: Vec<Album>,
@@ -52,9 +53,6 @@ fn contains_subfolders(folder_path: &str) -> bool {
 
 fn main() {
     let work_dir = "/mnt/d/Audiobooks/Test"; // Change this to your desired working directory
-    let author_level = 1; // Change this to the desired level
-    let album_level = 2; // Change this to the desired level
-    let book_level = 1; // Change this to the desired level
 
     let mut book_lib: Vec<Author> = Vec::new();
 
@@ -113,19 +111,20 @@ fn main() {
         }
     }
 
-    for author in book_lib.iter() {
-        println!("Author: {}", author.name);
-        for album in author.albums.iter() {
-            println!("  - Album: {}", album.title);
-            for book in album.books.iter() {
-                println!("      - Book: {}", book.title);
-            }
-        }
-        for book in author.books.iter() {
-            println!("  - Book: {}", book.title);
-        }
-    }
-
-    // Now you have the structured data in the `authors` vector.
-    // You can access authors, albums, and books using the defined structs.
+    let json_data = serde_json::to_string_pretty(&book_lib).expect("Failed to serialize data to JSON");
+    std::fs::write("./assets/lib.json", json_data).expect("Failed to write JSON data to file");
 }
+
+
+// for author in book_lib.iter() {
+    //     println!("Author: {}", author.name);
+    //     for album in author.albums.iter() {
+    //         println!("  - Album: {}", album.title);
+    //         for book in album.books.iter() {
+    //             println!("      - Book: {}", book.title);
+    //         }
+    //     }
+    //     for book in author.books.iter() {
+    //         println!("  - Book: {}", book.title);
+    //     }
+    // }
