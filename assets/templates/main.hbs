@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library</title>
+</head>
+<body>
+    <h1>Library</h1>
+    {{#each authors}}
+        <div class="author">
+            <h2>{{name}}</h2>
+            {{#each albums}}
+                <div class="album">
+                    <h3>{{title}}</h3>
+                    <img src="{{cover}}" alt="Album Cover">
+                    <ul>
+                        {{#each books}}
+                            <li>{{title}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/each}}
+            {{#each books}}
+                <div class="book">
+                    <h3>{{title}}</h3>
+                    <img src="{{cover}}" alt="Book Cover">
+                </div>
+            {{/each}}
+        </div>
+    {{/each}}
+</body>
+</html>
