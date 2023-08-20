@@ -3,7 +3,7 @@ mod builder;
 mod structs;
 
 fn main(){
-    const WORK_DOMAIN: &str = "/mnt/d/Audiobooks/Test";
+    const WORK_DOMAIN: &str = "/mnt/e/audiobooks";
     const JSON_PATH: &str = "./assets/data.json";
     const OUTPUT_PATH: &str = "./assets/output.html";
 
