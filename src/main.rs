@@ -1,18 +1,24 @@
+use std::env;
+
 mod scanner;
 mod builder;
 mod structs;
 
 fn main(){
-    const WORK_DOMAIN: &str = "/mnt/e/audiobooks";
-    const JSON_PATH: &str = "./assets/data.json";
-    const OUTPUT_PATH: &str = "./assets/output.html";
+    let args: Vec<String> = env::args().skip(1).collect();
+    let mut work_dir = args[0].clone();
+    if work_dir.chars().last().unwrap() != '/' {
+        work_dir = work_dir + "/";
+    }
+
+    let json_path = work_dir.clone() + "data.json";
+    let output_path = work_dir.clone() + "output.html";
+
 
     println!("--- START ---");
-    println!("Scanning: {}", WORK_DOMAIN);
-    scanner::scan(WORK_DOMAIN, JSON_PATH);
-    println!("Scanning complied");
-    println!("Building");
-    builder::build(JSON_PATH, OUTPUT_PATH);
-    println!("Building complied");
+   
+    scanner::scan(&work_dir.clone(), &json_path);
+    builder::build(&json_path, &output_path);
+    
     println!("--- END ---");
 }

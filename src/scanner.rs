@@ -29,6 +29,8 @@ fn contains_subfolders(folder_path: &str) -> bool {
 }
 
 pub fn scan(work_dir: &str, json_path: &str){
+    println!("Scanning: {}", work_dir);
+
     let mut book_lib: Vec<Author> = Vec::new();
 
     for entry in WalkDir::new(work_dir)
@@ -91,4 +93,5 @@ pub fn scan(work_dir: &str, json_path: &str){
 
     let json_data = serde_json::to_string_pretty(&lib).expect("Failed to serialize data to JSON");
     std::fs::write(json_path, json_data).expect("Failed to write JSON data to file");
+    println!("Scanning complied");
 }

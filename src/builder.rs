@@ -5,7 +5,8 @@ use std::io::Write;
 
 use crate::structs::Library;
 
-pub fn build(json_file_path: &str, output_path: &str) {
+pub fn build(json_path: &str, output_path: &str) {
+    println!("Building html file in: {}", output_path);
     // Read the template files
     let template_main = fs::read_to_string("assets/templates/main.hbs").expect("Failed to read template file");
     let template_author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
@@ -22,7 +23,7 @@ pub fn build(json_file_path: &str, output_path: &str) {
     handlebars.register_template_string("book", template_book).expect("Failed to register template");
 
     // Read JSON data from file
-    let json_data = read_to_string(json_file_path).expect("Failed to read JSON file");
+    let json_data = read_to_string(json_path).expect("Failed to read JSON file");
 
     // Deserialize the JSON data into your structured data
     let lib: Library = serde_json::from_str(&json_data)
@@ -38,5 +39,5 @@ pub fn build(json_file_path: &str, output_path: &str) {
     let mut html_file = File::create(output_path).expect("Failed to create HTML file");
     html_file.write_all(rendered_html.as_bytes()).expect("Failed to write HTML data to file");
 
-    println!("HTML file generated: {}", output_path);
+    println!("Building complied");
 }
