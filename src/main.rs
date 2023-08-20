@@ -3,10 +3,20 @@ use std::env;
 mod scanner;
 mod builder;
 mod structs;
+mod templates;
 
 fn main(){
     let args: Vec<String> = env::args().skip(1).collect();
-    let mut work_dir = args[0].clone();
+    let mut work_dir = String::new();
+    
+    if args.len() >= 1 {
+        work_dir = args[0].clone();
+        println!("Working directory: {}", args[0]);
+    } else {
+        work_dir = String::from("./");
+        println!("No working directory specified");
+    }
+
     if work_dir.chars().last().unwrap() != '/' {
         work_dir = work_dir + "/";
     }

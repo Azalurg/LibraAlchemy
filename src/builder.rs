@@ -1,18 +1,24 @@
 use serde_json;
 use handlebars::Handlebars;
-use std::fs::{self, File, read_to_string};
+use std::fs::{File, read_to_string};
 use std::io::Write;
 
 use crate::structs::Library;
+use crate::templates::{TEMP_MAIN, TEMP_AUTHOR, TEMP_ALBUM, TEMP_BOOK};
 
 pub fn build(json_path: &str, output_path: &str) {
     println!("Building html file in: {}", output_path);
-    // Read the template files
-    let template_main = fs::read_to_string("assets/templates/main.hbs").expect("Failed to read template file");
-    let template_author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
-    let template_album = fs::read_to_string("assets/templates/album.hbs").expect("Failed to read template file");
-    let template_book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
+    // Read the template files (development only)
+    // let template_main = fs::read_to_string("assets/templates/main.hbs").expect("Failed to read template file");
+    // let template_author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
+    // let template_album = fs::read_to_string("assets/templates/album.hbs").expect("Failed to read template file");
+    // let template_book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
 
+    let template_main = TEMP_MAIN;
+    let template_author = TEMP_AUTHOR;
+    let template_album = TEMP_ALBUM;
+    let template_book = TEMP_BOOK;
+ 
     // Create a Handlebars instance
     let mut handlebars = Handlebars::new();
 
