@@ -37,13 +37,13 @@ Library/
 ### Linux
 
 ```sh
-cargo build --release
+cargo build --release --features "external-templates"
 ```
 
 ### Windows
 
 ```sh
-cargo build --target x86_64-pc-windows-gnu --release
+cargo build --target x86_64-pc-windows-gnu --release --features "external-templates"
 ```
 
 ## Usage
@@ -68,9 +68,10 @@ cargo build --target x86_64-pc-windows-gnu --release
 - [ ] Add metadata support
 - [ ] Add more options like (not save json)
 - [ ] Add tests
-- [ ] Add counter to json
+- [X] Add counter to json
 - [ ] Adjust json structure
 - [ ] Add possibility to chose output path
 
 ## License
+
 This project is licensed under the MIT License.
