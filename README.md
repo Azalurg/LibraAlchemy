@@ -60,17 +60,27 @@ cargo build --target x86_64-pc-windows-gnu --release --features "external-templa
 .\target\release\audio-lib.exe <path-to-library>
 ```
 
-## TODO
+## TODO - Rust
 
 - [ ] Add support for `.png` and `.jpeg`
 - [ ] Add os recognition to make path correct
-- [ ] Adjust templates
 - [ ] Add metadata support
-- [ ] Add more options like (not save json)
+- [ ] Add more options like (not save json, use old json, etc.)
 - [ ] Add tests
 - [X] Add counter to json
 - [ ] Adjust json structure
 - [ ] Add possibility to chose output path
+- [ ] Change album to series
+- [ ] Open html in browser after generation
+
+## TODO - HTML
+
+- [ ] Fix title length
+- [ ] Set color palette
+- [ ] Switch to dark mode
+- [ ] Add cards for author and series
+- [ ] Create logo / graphic
+- [ ] Add footer
 
 ## License
 
