@@ -27,4 +27,6 @@ pub struct Author {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Library {
     pub authors: Vec<Author>,
+    pub books_amount: u32,
+    pub version: String
 }

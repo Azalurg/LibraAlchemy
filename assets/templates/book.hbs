@@ -1,6 +1,10 @@
 <div class="col">
     <div class="card shadow-sm">
-        <img src="{{cover}}" class="bd-placeholder-img card-img-top" style="max-width: 10rem; max-height: 10rem" alt="{{title}}" aria-label="Placeholder: {{title}}">
+        {{#if cover}}
+            <img src="{{cover}}" class="bd-placeholder-img card-img-top cover" alt="{{title}}" aria-label="Placeholder: {{title}}">
+        {{else}}
+            <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="bd-placeholder-img card-img-top cover" alt="{{title}}" aria-label="Placeholder: {{title}}">
+        {{/if}}
         <div class="card-body">
             <p class="card-text">{{title}}</p>
         </div>

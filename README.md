@@ -1,8 +1,8 @@
-# Audio-lib
+# **LibraAlchemy**
 
 |   |   |
 | :--- | :---: |
-|Audio-lib is a Rust application designed to simplify the management and organization of your audiobook collection. This tool scans your library of audiobooks and generates an interactive HTML view, making it easy to visualize and access your audiobook collection. Whether you have a diverse assortment of standalone titles or a series of books from various authors, this app provides a user-friendly way to navigate through your collection.| <img src="./assets/img/screenshot.jpg" alt="HTML View" style="max-width: 100%;"> |
+|**LibraAlchemy** is a Rust application designed to simplify the management and organization of your audiobook collection. This tool scans your library of audiobooks and generates an interactive HTML view, making it easy to visualize and access your audiobook collection. Whether you have a diverse assortment of standalone titles or a series of books from various authors, this app provides a user-friendly way to navigate through your collection.| <img src="./assets/img/screenshot.jpg" alt="HTML View" style="max-width: 100%;"> |
 
 
 ## Features

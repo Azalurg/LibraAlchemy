@@ -5,6 +5,8 @@ mod builder;
 mod structs;
 mod templates;
 
+pub const VERSION: &str = "0.2.1";
+
 fn main(){
     let args: Vec<String> = env::args().skip(1).collect();
     let mut work_dir = String::new();
