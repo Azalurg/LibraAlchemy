@@ -1,4 +1,4 @@
-pub const TEMP_MAIN: &str = "<!DOCTYPE html>
+const TEMP_MAIN: &str = "<!DOCTYPE html>
 <html>
 <head>
     <title>Library</title>
@@ -42,7 +42,7 @@ pub const TEMP_MAIN: &str = "<!DOCTYPE html>
 </html>
 ";
 
-pub const TEMP_AUTHOR: &str = "{{#if books}}
+const TEMP_AUTHOR: &str = "{{#if books}}
 {{#each books}}
     {{> book}}
 {{/each}}
@@ -55,14 +55,14 @@ pub const TEMP_AUTHOR: &str = "{{#if books}}
 {{/if}}
 ";
 
-pub const TEMP_ALBUM: &str = "{{#if books}}
+const TEMP_ALBUM: &str = "{{#if books}}
 {{#each books}}
     {{> book}}
 {{/each}}
 {{/if}}
 ";
 
-pub const TEMP_BOOK: &str = "<div class=\"col\">
+const TEMP_BOOK: &str = "<div class=\"col\">
 <div class=\"card shadow-sm\">
     <img src=\"{{cover}}\" class=\"bd-placeholder-img card-img-top\" style=\"max-width: 10rem; max-height: 10rem\" alt=\"{{title}}\" aria-label=\"Placeholder: {{title}}\">
     <div class=\"card-body\">
@@ -71,3 +71,32 @@ pub const TEMP_BOOK: &str = "<div class=\"col\">
 </div>
 </div>
 ";
+
+pub struct Templates{
+    pub main: String,
+    pub author: String,
+    pub album: String,
+    pub book: String,
+}
+
+#[cfg(feature = "external-templates")]
+pub fn get_templates() -> Templates {
+    Templates {
+        main: TEMP_MAIN.to_string(),
+        author: TEMP_AUTHOR.to_string(),
+        album: TEMP_ALBUM.to_string(),
+        book: TEMP_BOOK.to_string(),
+    }
+}
+
+#[cfg(not(feature = "external-templates"))]
+pub fn get_templates() -> Templates {
+    use std::fs;
+
+    let main = fs::read_to_string("assets/templates/main.hbs").expect("Failed to read template file");
+    let author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
+    let album = fs::read_to_string("assets/templates/album.hbs").expect("Failed to read template file");
+    let book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
+    
+    Templates { main, author, album, book }
+} 

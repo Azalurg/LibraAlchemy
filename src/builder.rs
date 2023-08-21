@@ -4,29 +4,21 @@ use std::fs::{File, read_to_string};
 use std::io::Write;
 
 use crate::structs::Library;
-use crate::templates::{TEMP_MAIN, TEMP_AUTHOR, TEMP_ALBUM, TEMP_BOOK};
+use crate::templates::get_templates;
 
 pub fn build(json_path: &str, output_path: &str) {
     println!("Building html file in: {}", output_path);
     // Read the template files (development only)
-    // let template_main = fs::read_to_string("assets/templates/main.hbs").expect("Failed to read template file");
-    // let template_author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
-    // let template_album = fs::read_to_string("assets/templates/album.hbs").expect("Failed to read template file");
-    // let template_book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
-
-    let template_main = TEMP_MAIN;
-    let template_author = TEMP_AUTHOR;
-    let template_album = TEMP_ALBUM;
-    let template_book = TEMP_BOOK;
+    let templates = get_templates();
  
     // Create a Handlebars instance
     let mut handlebars = Handlebars::new();
 
     // Register the template
-    handlebars.register_template_string("main", template_main).expect("Failed to register template");
-    handlebars.register_template_string("author", template_author).expect("Failed to register template");
-    handlebars.register_template_string("album", template_album).expect("Failed to register template");
-    handlebars.register_template_string("book", template_book).expect("Failed to register template");
+    handlebars.register_template_string("main", templates.main).expect("Failed to register template");
+    handlebars.register_template_string("author", templates.author).expect("Failed to register template");
+    handlebars.register_template_string("album", templates.album).expect("Failed to register template");
+    handlebars.register_template_string("book", templates.book).expect("Failed to register template");
 
     // Read JSON data from file
     let json_data = read_to_string(json_path).expect("Failed to read JSON file");
