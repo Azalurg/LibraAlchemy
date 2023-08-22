@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>LibraAlchemy</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Azalurg/public/main/images/icon.ico">
@@ -17,6 +18,13 @@
         @media (min-width:1200px){
             .row-cols-xl-8>*{flex:0 0 auto;width:12.5%}
         }
+        .grid-container {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+    </style>
         
     </style>
 
@@ -37,12 +45,18 @@
                 <div class="col-lg-6 col-md-8 mx-auto">
                     <h1 class="fw-light">LibraAlchemy</h1>
                     <p class="lead text-muted">Craft your private audio library with open-source magic. Curate, personalize, and transmute your collection offline, powered by alchemy.</p>
+                    <div class="btn-group mb-3">
+                        <button class="btn btn-primary" onclick="showGrid(1)">Grid 1</button>
+                        <button class="btn btn-primary" onclick="showGrid(2)">Grid 2</button>
+                        <button class="btn btn-primary" onclick="showGrid(3)">Grid 3</button>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
+
+    <div class="py-5 bg-body-tertiary">
+        <div class="container grid-container visible" id="grid1">
             <h3 class="pb-2">Books ({{books_amount}})</h3>
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-8 g-3">
                 {{#each authors}}
@@ -50,6 +64,28 @@
                 {{/each}}
             </div>
         </div>
+
+        <div class="container grid-container" id="grid2">
+            test
+        </div>
+
+        <div class="container grid-container" id="grid3">
+            test
+        </div>
     </div>
+
+    <script>
+        function showGrid(gridNumber) {
+            // Hide all grid containers
+            const gridContainers = document.querySelectorAll('.grid-container');
+            gridContainers.forEach(container => {
+                container.classList.remove('visible');
+            });
+
+            // Show the selected grid container
+            const selectedGrid = document.getElementById(`grid${gridNumber}`);
+            selectedGrid.classList.add('visible');
+        }
+    </script>
 </body>
 </html>
