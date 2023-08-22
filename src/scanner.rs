@@ -36,6 +36,7 @@ pub fn scan(work_dir: &str, json_path: &str){
 
     let mut book_lib: Vec<Author> = Vec::new();
     let mut books_amount: u32 = 0;
+    let mut authors_amount: u32 = 0;
 
     for entry in WalkDir::new(work_dir)
         .max_depth(1)
@@ -53,6 +54,7 @@ pub fn scan(work_dir: &str, json_path: &str){
             cover: get_cover_path(entry.path().display().to_string()),
             directory: entry.path().display().to_string(),
         });
+        authors_amount += 1;
 
         for author in WalkDir::new(book_lib.last().unwrap().directory.clone())
             .max_depth(1)
@@ -96,6 +98,7 @@ pub fn scan(work_dir: &str, json_path: &str){
     let lib = Library {
         authors: book_lib,
         books_amount: books_amount,
+        authors_amount: authors_amount,
         version: String::from(format!("{}", crate::VERSION)),
     };
 

@@ -46,9 +46,9 @@
                     <h1 class="fw-light">LibraAlchemy</h1>
                     <p class="lead text-muted">Craft your private audio library with open-source magic. Curate, personalize, and transmute your collection offline, powered by alchemy.</p>
                     <div class="btn-group mb-3">
-                        <button class="btn btn-primary" onclick="showGrid(1)">Grid 1</button>
-                        <button class="btn btn-primary" onclick="showGrid(2)">Grid 2</button>
-                        <button class="btn btn-primary" onclick="showGrid(3)">Grid 3</button>
+                        <button class="btn btn-primary active" onclick="showGrid(1); activeButton(1)" id="button1">Books</button>
+                        <button class="btn btn-primary" onclick="showGrid(2); activeButton(2)" id="button2">Authors</button>
+                        <button class="btn btn-primary" onclick="showGrid(3); activeButton(3)" id="button3">Series</button>
                     </div>
                 </div>
             </div>
@@ -60,13 +60,32 @@
             <h3 class="pb-2">Books ({{books_amount}})</h3>
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-8 g-3">
                 {{#each authors}}
-                    {{> author}}
+                    {{#if books}}
+                        {{#each books}}
+                            {{> book}}
+                        {{/each}}
+                    {{/if}}
+                        
+                    {{#if albums}}
+                        {{#each albums}}
+                            {{#if books}}
+                                {{#each books}}
+                                    {{> book}}
+                                {{/each}}
+                            {{/if}}
+                        {{/each}}
+                    {{/if}}
                 {{/each}}
             </div>
         </div>
 
         <div class="container grid-container" id="grid2">
-            test
+            <h3 class="pb-2">Authors ({{authors_amount}})</h3>
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-8 g-3">
+                {{#each authors}}
+                    {{> author}}
+                {{/each}}
+            </div>
         </div>
 
         <div class="container grid-container" id="grid3">
@@ -85,6 +104,16 @@
             // Show the selected grid container
             const selectedGrid = document.getElementById(`grid${gridNumber}`);
             selectedGrid.classList.add('visible');
+        }
+
+        function activeButton(buttonNumber) {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            const selectedButton = document.getElementById(`button${buttonNumber}`);
+            selectedButton.classList.add('active');
         }
     </script>
 </body>

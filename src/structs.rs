@@ -28,5 +28,6 @@ pub struct Author {
 pub struct Library {
     pub authors: Vec<Author>,
     pub books_amount: u32,
+    pub authors_amount: u32,
     pub version: String
 }

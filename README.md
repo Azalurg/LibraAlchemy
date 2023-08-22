@@ -62,7 +62,7 @@ cargo build --target x86_64-pc-windows-gnu --release --features "external-templa
 
 ## TODO - Rust
 
-- [ ] Add support for `.png` and `.jpeg`
+- [X] Add support for `.png` and `.jpeg`
 - [ ] Add os recognition to make path correct
 - [ ] Add metadata support
 - [ ] Add more options like (not save json, use old json, etc.)
