@@ -4,12 +4,15 @@ use serde_json;
 
 use crate::structs::{Author, Album, Book, Library};
 
-fn check_cover(path: String) -> String {
-    if fs::metadata(&path).is_ok() {
-        path
-    } else {
-        String::new()
+fn get_cover_path(path: String) -> String {
+    let ext = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
+    for i in ext.iter() {
+        let cover_path = path.clone() + "/cover" +i;
+        if fs::metadata(&cover_path).is_ok() {
+            return cover_path;
+        }
     }
+    String::new()
 }
 
 fn contains_subfolders(folder_path: &str) -> bool {
@@ -47,7 +50,7 @@ pub fn scan(work_dir: &str, json_path: &str){
             name: author_name,
             albums: Vec::new(),
             books: Vec::new(),
-            cover: check_cover(entry.path().display().to_string() + "/cover.jpg"),
+            cover: get_cover_path(entry.path().display().to_string()),
             directory: entry.path().display().to_string(),
         });
 
@@ -62,7 +65,7 @@ pub fn scan(work_dir: &str, json_path: &str){
                 book_lib.last_mut().unwrap().albums.push(Album {
                     title: author.path().file_name().unwrap().to_str().unwrap().to_string(),
                     books: Vec::new(),
-                    cover: check_cover(author.path().display().to_string() + "/cover.jpg"),
+                    cover: get_cover_path(author.path().display().to_string()),
                     directory: author.path().display().to_string(),
                 });
 
@@ -76,7 +79,7 @@ pub fn scan(work_dir: &str, json_path: &str){
                     book_lib.last_mut().unwrap().albums.last_mut().unwrap().books.push(Book {
                         title: album.path().file_name().unwrap().to_str().unwrap().to_string(),
                         directory: album.path().display().to_string(),
-                        cover: check_cover(album.path().display().to_string() + "/cover.jpg"),
+                        cover: get_cover_path(album.path().display().to_string()),
                     });
                     books_amount += 1;
                 }
@@ -84,7 +87,7 @@ pub fn scan(work_dir: &str, json_path: &str){
                 book_lib.last_mut().unwrap().books.push(Book {
                     title: author.path().file_name().unwrap().to_str().unwrap().to_string(),
                     directory: author.path().display().to_string(),
-                    cover: check_cover(author.path().display().to_string() + "/cover.jpg"),
+                    cover: get_cover_path(author.path().display().to_string()),
                 });
                 books_amount += 1;
             }
