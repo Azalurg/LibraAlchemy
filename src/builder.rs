@@ -22,7 +22,7 @@ pub fn build(json_path: &str, output_path: &str) {
         .register_template_string("author", templates.author)
         .expect("Failed to register template");
     handlebars
-        .register_template_string("album", templates.album)
+        .register_template_string("series", templates.series)
         .expect("Failed to register template");
     handlebars
         .register_template_string("book", templates.book)

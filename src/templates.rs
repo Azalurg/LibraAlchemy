@@ -41,7 +41,7 @@ const TEMP_MAIN: &str = "<!DOCTYPE html>
             </div>
         </section>
     </main>
-    <div class=\"album py-5 bg-body-tertiary\">
+    <div class=\"series py-5 bg-body-tertiary\">
         <div class=\"container\">
             <h3 class=\"pb-2\">Books ({{books_amount}})</h3>
             <div class=\"row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-8 g-3\">
@@ -61,9 +61,9 @@ const TEMP_AUTHOR: &str = "{{#if books}}
 {{/each}}
 {{/if}}
 
-{{#if albums}}
-{{#each albums}}
-    {{> album}}
+{{#if series}}
+{{#each series}}
+    {{> series}}
 {{/each}}
 {{/if}}
 ";
@@ -92,7 +92,7 @@ const TEMP_BOOK: &str = "<div class=\"col\">
 pub struct Templates {
     pub main: String,
     pub author: String,
-    pub album: String,
+    pub series: String,
     pub book: String,
 }
 
@@ -101,7 +101,7 @@ pub fn get_templates() -> Templates {
     Templates {
         main: TEMP_MAIN.to_string(),
         author: TEMP_AUTHOR.to_string(),
-        album: TEMP_ALBUM.to_string(),
+        series: TEMP_ALBUM.to_string(),
         book: TEMP_BOOK.to_string(),
     }
 }
@@ -112,13 +112,13 @@ pub fn get_templates() -> Templates {
 
     let main = fs::read_to_string("assets/templates/main.hbs").expect("Failed to read template file");
     let author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
-    let album = fs::read_to_string("assets/templates/album.hbs").expect("Failed to read template file");
+    let series = fs::read_to_string("assets/templates/series.hbs").expect("Failed to read template file");
     let book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
 
     Templates {
         main,
         author,
-        album,
+        series,
         book,
     }
 }

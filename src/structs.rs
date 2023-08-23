@@ -6,11 +6,11 @@ pub struct Book {
     pub directory: String,
     pub cover: String,
     pub author: String,
-    pub album: String,
+    pub series: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Album {
+pub struct Series {
     pub title: String,
     pub cover: String,
     pub directory: String,
@@ -23,17 +23,17 @@ pub struct Author {
     pub name: String,
     pub cover: String,
     pub directory: String,
-    pub albums_amount: u32,
+    pub series_amount: u32,
     pub books_amount: u32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Library {
     pub authors: Vec<Author>,
-    pub albums: Vec<Album>,
+    pub series: Vec<Series>,
     pub books: Vec<Book>,
     pub authors_amount: u32,
-    pub albums_amount: u32,
+    pub series_amount: u32,
     pub books_amount: u32,
     pub version: String,
 }
@@ -42,10 +42,10 @@ impl Library {
     pub fn new() -> Library {
         Library {
             authors: Vec::new(),
-            albums: Vec::new(),
+            series: Vec::new(),
             books: Vec::new(),
             authors_amount: 0,
-            albums_amount: 0,
+            series_amount: 0,
             books_amount: 0,
             version: String::from(format!("{}", crate::VERSION)),
         }
@@ -56,9 +56,9 @@ impl Library {
         self.authors_amount += 1;
     }
 
-    pub fn add_album(&mut self, album: Album) {
-        self.albums.push(album);
-        self.albums_amount += 1;
+    pub fn add_series(&mut self, series: Series) {
+        self.series.push(series);
+        self.series_amount += 1;
     }
 
     pub fn add_book(&mut self, book: Book) {

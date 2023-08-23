@@ -2,7 +2,7 @@ use serde_json;
 use std::fs;
 use walkdir::WalkDir;
 
-use crate::structs::{Album, Author, Book, Library};
+use crate::structs::{Series, Author, Book, Library};
 
 fn get_cover_path(path: String) -> String {
     let ext = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
@@ -49,20 +49,20 @@ pub fn scan(work_dir: &str, json_path: &str) {
     {
         let author_name = get_name(&author);
         let mut author_books = 0;
-        let mut albums_amount = 0;
+        let mut series_amount = 0;
 
-        for album in WalkDir::new(author.path().clone())
+        for series in WalkDir::new(author.path().clone())
             .max_depth(1)
             .min_depth(1)
             .into_iter()
             .filter_map(|e| e.ok())
             .filter(|e| e.path().is_dir())
         {
-            if contains_subfolders(album.path().display().to_string().as_str()) {
-                let mut album_books = 0;
-                let album_name = get_name(&album);
+            if contains_subfolders(series.path().display().to_string().as_str()) {
+                let mut series_books = 0;
+                let series_name = get_name(&series);
 
-                for book in WalkDir::new(album.path().clone())
+                for book in WalkDir::new(series.path().clone())
                     .max_depth(1)
                     .min_depth(1)
                     .into_iter()
@@ -74,28 +74,28 @@ pub fn scan(work_dir: &str, json_path: &str) {
                         directory: book.path().display().to_string(),
                         cover: get_cover_path(book.path().display().to_string()),
                         author: author_name.clone(),
-                        album: album_name.clone(),
+                        series: series_name.clone(),
                     });
-                    album_books += 1;
+                    series_books += 1;
                     author_books += 1;
                 }
 
-                lib.add_album(Album {
-                    title: album_name,
-                    cover: get_cover_path(album.path().display().to_string()),
-                    directory: album.path().display().to_string(),
+                lib.add_series(Series {
+                    title: series_name,
+                    cover: get_cover_path(series.path().display().to_string()),
+                    directory: series.path().display().to_string(),
                     author: author_name.clone(),
-                    books_amount: album_books,
+                    books_amount: series_books,
                 });
-                albums_amount += 1;
+                series_amount += 1;
             } else {
-                let book = album;
+                let book = series;
                 lib.add_book(Book {
                     title: get_name(&book),
                     directory: book.path().display().to_string(),
                     cover: get_cover_path(book.path().display().to_string()),
                     author: author_name.clone(),
-                    album: String::new(),
+                    series: String::new(),
                 });
                 author_books += 1;
             }
@@ -105,7 +105,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
             name: author_name,
             cover: get_cover_path(author.path().display().to_string()),
             directory: author.path().display().to_string(),
-            albums_amount: albums_amount,
+            series_amount: series_amount,
             books_amount: author_books,
         });
     }
