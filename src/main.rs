@@ -5,7 +5,7 @@ mod scanner;
 mod structs;
 mod templates;
 
-pub const VERSION: &str = "0.2.2";
+pub const VERSION: &str = "0.3.0";
 
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();

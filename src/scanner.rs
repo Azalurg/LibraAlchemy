@@ -2,7 +2,7 @@ use serde_json;
 use std::fs;
 use walkdir::WalkDir;
 
-use crate::structs::{Series, Author, Book, Library};
+use crate::structs::{Author, Book, Library, Series};
 
 fn get_cover_path(path: String) -> String {
     let ext = [".jpg", ".jpeg", ".png", ".gif", ".webp"];

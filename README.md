@@ -81,6 +81,7 @@ cargo build --target x86_64-pc-windows-gnu --release --features "external-templa
 - [X] Add cards for author and series
 - [ ] Create logo / graphic
 - [ ] Add footer
+- [ ] Add pagination
 
 ## License
 
