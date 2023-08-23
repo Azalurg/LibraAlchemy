@@ -89,7 +89,7 @@ const TEMP_BOOK: &str = "<div class=\"col\">
 </div>
 ";
 
-pub struct Templates{
+pub struct Templates {
     pub main: String,
     pub author: String,
     pub album: String,
@@ -114,6 +114,11 @@ pub fn get_templates() -> Templates {
     let author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
     let album = fs::read_to_string("assets/templates/album.hbs").expect("Failed to read template file");
     let book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
-    
-    Templates { main, author, album, book }
-} 
+
+    Templates {
+        main,
+        author,
+        album,
+        book,
+    }
+}

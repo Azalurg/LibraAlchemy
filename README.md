@@ -68,7 +68,7 @@ cargo build --target x86_64-pc-windows-gnu --release --features "external-templa
 - [ ] Add more options like (not save json, use old json, etc.)
 - [ ] Add tests
 - [X] Add counter to json
-- [ ] Adjust json structure
+- [X] Adjust json structure
 - [ ] Add possibility to chose output path
 - [ ] Change album to series
 - [ ] Open html in browser after generation
@@ -78,7 +78,7 @@ cargo build --target x86_64-pc-windows-gnu --release --features "external-templa
 - [ ] Fix title length
 - [ ] Set color palette
 - [ ] Switch to dark mode
-- [ ] Add cards for author and series
+- [X] Add cards for author and series
 - [ ] Create logo / graphic
 - [ ] Add footer
 

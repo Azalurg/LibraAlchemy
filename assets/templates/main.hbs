@@ -59,22 +59,8 @@
         <div class="container grid-container visible" id="grid1">
             <h3 class="pb-2">Books ({{books_amount}})</h3>
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-8 g-3">
-                {{#each authors}}
-                    {{#if books}}
-                        {{#each books}}
-                            {{> book}}
-                        {{/each}}
-                    {{/if}}
-                        
-                    {{#if albums}}
-                        {{#each albums}}
-                            {{#if books}}
-                                {{#each books}}
-                                    {{> book}}
-                                {{/each}}
-                            {{/if}}
-                        {{/each}}
-                    {{/if}}
+                {{#each books}}
+                    {{> book}}
                 {{/each}}
             </div>
         </div>
@@ -89,7 +75,11 @@
         </div>
 
         <div class="container grid-container" id="grid3">
-            test
+             <h3 class="pb-2">Authors ({{albums_amount}})</h3>
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-8 g-3">
+                {{#each albums}}
+                    {{> album}}
+                {{/each}}
         </div>
     </div>
 
