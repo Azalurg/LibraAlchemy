@@ -1,13 +1,12 @@
-<div class="col">
-    <div class="card shadow-sm">
-        {{#if cover}}
-            <img src="{{cover}}" class="bd-placeholder-img card-img-top cover" alt="{{title}}" aria-label="Placeholder: {{title}}">
-        {{else}}
-            <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="bd-placeholder-img card-img-top cover" alt="{{title}}" aria-label="Placeholder: {{title}}">
-        {{/if}}
-        <div>
-            <div class="cardText cardText-first">{{title}}</div>
-            <div class="cardText cardText-second">{{author}}</div>
-        </div>
-    </div>
-</div>
+<li class="lib-cell shadow">
+    {{#if cover}}
+    <img src="{{cover}}" class="lib-img" alt="{{title}}">
+    {{else}}
+    <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img" alt="{{title}}">
+    {{/if}}
+    
+    <div class="lib-text lib-tex-first" title="{{title}}">{{title}}</div>
+    <div class="lib-text lib-text-second" title="{{author}}">{{author}}</div>
+    
+</li>
+

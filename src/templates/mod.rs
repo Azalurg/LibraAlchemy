@@ -5,17 +5,19 @@ pub struct Templates {
     pub author: String,
     pub series: String,
     pub book: String,
+    pub style: String,
 }
 
 #[cfg(feature = "external-templates")]
 pub fn get_templates() -> Templates {
-    use self::raw::{TEMP_AUTHOR, TEMP_BOOK, TEMP_MAIN, TEMP_SERIES};
+    use self::raw::{TEMP_AUTHOR, TEMP_BOOK, TEMP_MAIN, TEMP_SERIES, TEMP_STYLE};
 
     Templates {
         main: TEMP_MAIN.to_string(),
         author: TEMP_AUTHOR.to_string(),
         series: TEMP_SERIES.to_string(),
         book: TEMP_BOOK.to_string(),
+        style: TEMP_STYLE.to_string(),
     }
 }
 
@@ -27,11 +29,13 @@ pub fn get_templates() -> Templates {
     let author = fs::read_to_string("assets/templates/author.hbs").expect("Failed to read template file");
     let series = fs::read_to_string("assets/templates/series.hbs").expect("Failed to read template file");
     let book = fs::read_to_string("assets/templates/book.hbs").expect("Failed to read template file");
+    let style = fs::read_to_string("assets/templates/style.hbs").expect("Failed to read template file");
 
     Templates {
         main,
         author,
         series,
         book,
+        style,
     }
 }

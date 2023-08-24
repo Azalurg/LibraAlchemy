@@ -27,6 +27,9 @@ pub fn build(json_path: &str, output_path: &str) {
     handlebars
         .register_template_string("book", templates.book)
         .expect("Failed to register template");
+    handlebars
+        .register_template_string("style", templates.style)
+        .expect("Failed to register template");
 
     // Read JSON data from file
     let json_data = read_to_string(json_path).expect("Failed to read JSON file");
