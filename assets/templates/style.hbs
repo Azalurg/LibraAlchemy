@@ -1,18 +1,18 @@
 <style>
     :root {
-        --color-bg: #0d1117;
-        --color-bg-alt: #161b22;
-        --color-text: #e6edf3;
-        --color-text-alt: #7d8590;
+        --color-bg: #12101d;
+        --color-bg-alt: #2e3440;
+        --color-text: #e6e6fa;
+        --color-text-alt: #8d99a8;
 
         --color-navbar-bg: #010409;
         --color-navbar-text: #c9d1d9;
 
-        --color-accent-1: hsl(160, 99%, 55%);
-        --color-accent-2: hsl(163, 90%, 38%);
-        --color-accent-3: hsl(166, 85%, 21%);
+        --color-accent-1: hsl(84, 61%, 61%);
+        --color-accent-2: hsl(88, 48%, 52%);
+        --color-accent-3: hsl(82, 40%, 38%);
 
-        --aspect-ratio: calc(1.38);
+        --plastic-number-const: 1.32471;
     }
 
     body {
@@ -31,6 +31,7 @@
         margin-left: auto;
     }
 
+    footer,
     navbar {
         position: relative;
         display: flex;
@@ -44,7 +45,7 @@
 
     .shadow {
         transition: 0.3s;
-        box-shadow: 0 0.5rem 1rem hsl(166, 85%, 21%, 0.5) !important;
+        box-shadow: 0 0.25rem 0.75rem var(--color-accent-2) !important;
     }
 
     .card {
@@ -82,8 +83,8 @@
     }
 
     .lib-cell {
-        width: 160px;
-        height: calc(160px * var(--aspect-ratio));
+        width: 10rem;
+        height: calc(10rem * var(--plastic-number-const));
         margin: 1rem;
         border-radius: 0.5rem;
         background-color: var(--color-bg-alt);
@@ -93,11 +94,7 @@
         width: 100%;
         aspect-ratio: 1/1;
         border-radius: 0.5rem 0.5rem 0 0;
-        filter: brightness(0.8);
-    }
-
-    .lib-img:hover {
-        filter: brightness(1);
+        filter: brightness(0.85);
     }
 
     .lib-text {
@@ -162,26 +159,32 @@
         line-height: 1.6em;
     }
 
+    a{
+        color: var(--color-accent-1);
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+        color: var(--color-accent-2);
+        text-decoration: underline;
+    }
+
     .btn {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         background-color: transparent;
-        border: 0.2rem solid var(--color-accent-1);
+        border: 0.2rem solid var(--color-accent-3);
         border-radius: 1rem;
-        padding: 0.5rem 1rem;
-        margin: 0.5rem;
-        color: var(--color-text);
+        padding: 0.6rem 1.1rem;
+        margin: 0.6rem;
         color: var(--color-text-alt);
-        border-color: var(--color-accent-2);
     }
 
     .btn:hover,
-    .btn:focus {
-        border-color: var(--color-accent-1);
-    }
-
+    .btn:focus,
     .active {
         background-color: var(--color-bg-alt);
-        border-color: var(--color-accent-3);
+        border-color: var(--color-accent-1);
         color: var(--color-text);
     }
 </style>

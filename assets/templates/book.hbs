@@ -1,11 +1,14 @@
 <li class="lib-cell shadow">
     {{#if cover}}
-    <img src="{{cover}}" class="lib-img" alt="{{title}}">
+    <img src="{{cover}}" class="lib-img" alt="{{title}}" title="{{series}} - {{title}} - {{author}}">
     {{else}}
     <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img" alt="{{title}}">
     {{/if}}
-    
+    {{#if series}}
+    <div class="lib-text lib-tex-first" title="{{series}} - {{title}}">{{series}} - {{title}}</div>
+    {{else}}
     <div class="lib-text lib-tex-first" title="{{title}}">{{title}}</div>
+    {{/if}}
     <div class="lib-text lib-text-second" title="{{author}}">{{author}}</div>
     
 </li>

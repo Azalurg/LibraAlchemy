@@ -1,3 +1,4 @@
+use chrono::Local;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -36,10 +37,12 @@ pub struct Library {
     pub series_amount: u32,
     pub books_amount: u32,
     pub version: String,
+    pub last_update: String,
 }
 
 impl Library {
     pub fn new() -> Library {
+        let last_update = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
         Library {
             authors: Vec::new(),
             series: Vec::new(),
@@ -48,6 +51,7 @@ impl Library {
             series_amount: 0,
             books_amount: 0,
             version: String::from(format!("{}", crate::VERSION)),
+            last_update: last_update,
         }
     }
 
