@@ -13,6 +13,7 @@
         --color-accent-3: hsl(82, 40%, 38%);
 
         --plastic-number-const: 1.32471;
+        --cell-width: 8.5rem;
     }
 
     body {
@@ -83,8 +84,8 @@
     }
 
     .lib-cell {
-        width: 10rem;
-        height: calc(10rem * var(--plastic-number-const));
+        width: var(--cell-width);
+        height: calc(var(--cell-width) * var(--plastic-number-const));
         margin: 1rem;
         border-radius: 0.5rem;
         background-color: var(--color-bg-alt);
@@ -187,4 +188,6 @@
         border-color: var(--color-accent-1);
         color: var(--color-text);
     }
+
+    
 </style>
