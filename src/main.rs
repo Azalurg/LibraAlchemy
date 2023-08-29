@@ -6,7 +6,7 @@ use serde_json;
 
 mod scanner;
 mod structs;
-mod library;
+mod templates;
 
 use structs::Library;
 
@@ -53,7 +53,7 @@ fn rocket() -> _ {
 
     rocket::build()
         .manage(data)
-        .mount("/", routes![library::index])
+        .mount("/", routes![templates::index])
         .attach(Template::fairing())
 }
 

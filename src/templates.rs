@@ -9,7 +9,7 @@ pub fn index(data: &State<Library>) -> Template {
     let context = to_value(&**data).expect("Failed to serialize data to JSON");
 
     Template::render(
-        "main",
+        "gallery/index",
         context
     )
 }

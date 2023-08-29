@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LibraAlchemy</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Azalurg/public/main/images/icon.ico">
+
+    {{> style}}
+</head>
+
+<body>
+    {{> layout/navbar}}
+
+    {{~> content}}
+
+    {{> layout/footer}}
+
+    <script>
+        function showGrid(gridNumber) {
+            // Hide all grid containers
+            const gridContainers = document.querySelectorAll('.grid-container');
+            gridContainers.forEach(container => {
+                container.classList.remove('visible');
+            });
+
+            // Show the selected grid container
+            const selectedGrid = document.getElementById(`grid${gridNumber}`);
+            selectedGrid.classList.add('visible');
+        }
+
+        function activeButton(buttonNumber) {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            const selectedButton = document.getElementById(`button${buttonNumber}`);
+            selectedButton.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

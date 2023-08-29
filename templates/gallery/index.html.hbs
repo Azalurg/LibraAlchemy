@@ -1,0 +1,44 @@
+{{#*inline "content"}}
+
+<section class="card">
+    <h1>LibraAlchemy</h1>
+    <p>Craft your private audio library with open-source magic. Curate,
+        personalize, and transmute your collection offline, powered by alchemy.</p>
+    <div class="btn-group">
+        <button class="btn active" onclick="showGrid(1); activeButton(1)" id="button1">Books</button>
+        <button class="btn" onclick="showGrid(2); activeButton(2)" id="button2">Authors</button>
+        <button class="btn" onclick="showGrid(3); activeButton(3)" id="button3">Series</button>
+    </div>
+</section>
+
+<section style="margin-top: 4rem;">
+    <div class="container grid-container visible" id="grid1">
+        <h3>Books ({{books_amount}})</h3>
+        <ul class="lib">
+            {{#each books}}
+            {{> gallery/book}}
+            {{/each}}
+        </ul>
+    </div>
+
+    <div class="container grid-container" id="grid2">
+        <h3 class="">Authors ({{authors_amount}})</h3>
+        <ul class="lib">
+            {{#each authors}}
+            {{> gallery/author}}
+            {{/each}}
+        </ul>
+    </div>
+
+    <div class="container grid-container" id="grid3">
+        <h3 class="">Series ({{series_amount}})</h3>
+        <ul class="lib">
+            {{#each series}}
+            {{> gallery/series}}
+            {{/each}}
+        </ul>
+    </div>
+</section>
+
+{{/inline}}
+{{> index}}
