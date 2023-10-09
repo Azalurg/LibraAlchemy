@@ -5,11 +5,15 @@ use walkdir::WalkDir;
 use crate::structs::{Author, Book, Library, Series};
 
 fn get_cover_path(path: String) -> String {
-    let ext = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
-    for i in ext.iter() {
-        let cover_path = path.clone() + "/cover" + i;
-        if fs::metadata(&cover_path).is_ok() {
-            return cover_path;
+    let exts = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".nfo"];
+    let names = ["cover", "folder", "album", "poster", "default", "art"];
+
+    for ext in exts.iter() {
+        for name in names.iter() {
+            let cover_path = path.clone() + "/" + name + ext;
+            if fs::metadata(&cover_path).is_ok() {
+                return cover_path;
+            }
         }
     }
     String::new()

@@ -16,7 +16,7 @@
         <h3>Books ({{books_amount}})</h3>
         <ul class="lib">
             {{#each books}}
-            {{> gallery/book}}
+            {{> books/book}}
             {{/each}}
         </ul>
     </div>
@@ -25,7 +25,7 @@
         <h3 class="">Authors ({{authors_amount}})</h3>
         <ul class="lib">
             {{#each authors}}
-            {{> gallery/author}}
+            {{> authors/author}}
             {{/each}}
         </ul>
     </div>
@@ -34,11 +34,35 @@
         <h3 class="">Series ({{series_amount}})</h3>
         <ul class="lib">
             {{#each series}}
-            {{> gallery/series}}
+            {{> series/series}}
             {{/each}}
         </ul>
     </div>
 </section>
+
+<script>
+    function showGrid(gridNumber) {
+        // Hide all grid containers
+        const gridContainers = document.querySelectorAll('.grid-container');
+        gridContainers.forEach(container => {
+            container.classList.remove('visible');
+        });
+
+        // Show the selected grid container
+        const selectedGrid = document.getElementById(`grid${gridNumber}`);
+        selectedGrid.classList.add('visible');
+    }
+
+    function activeButton(buttonNumber) {
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.classList.remove('active');
+        });
+
+        const selectedButton = document.getElementById(`button${buttonNumber}`);
+        selectedButton.classList.add('active');
+    }
+</script>
 
 {{/inline}}
 {{> index}}

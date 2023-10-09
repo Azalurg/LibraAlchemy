@@ -59,14 +59,14 @@ async fn main() {
 
     println!("--- START ---");
 
-    scanner::scan(&work_dir.clone(), &json_path);
+    // scanner::scan(&work_dir.clone(), &json_path);    <--- For development
     let data = load_data_from_json(&json_path).unwrap();
 
     println!("--- END ---");
 
     let _ = rocket::build()
         .manage(data)
-        .mount("/", routes![templates::index])
+        .mount("/", routes![templates::index, templates::statics])
         .mount("/", routes![static_files])
         .attach(Template::fairing())
         .launch()
