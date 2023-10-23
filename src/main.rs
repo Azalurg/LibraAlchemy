@@ -59,7 +59,7 @@ async fn main() {
 
     println!("--- START ---");
 
-    // scanner::scan(&work_dir.clone(), &json_path);    <--- For development
+    scanner::scan(&work_dir.clone(), &json_path);  //  <--- For development
     let data = load_data_from_json(&json_path).unwrap();
 
     println!("--- END ---");

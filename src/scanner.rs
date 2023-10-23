@@ -40,22 +40,11 @@ fn get_name(dir: &walkdir::DirEntry) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_string()
 }
 
-fn get_id(index: u32, pre: char) -> String {
-    let mut id = format!("{}-{}", pre, index);
-    
-    let random_value: String = (0..(16 - id.len()))
-        .map(|_| rand::thread_rng().gen_range(b'0'..=b'9') as char)
-        .collect();
-    
-    id.push_str(&random_value);
-    id
-}
 
 pub fn scan(work_dir: &str, json_path: &str) {
     println!("Scanning: {}", work_dir);
 
     let mut lib = Library::new();
-    let mut index: u32 = 0;
 
     for author in WalkDir::new(work_dir)
         .max_depth(1)
@@ -67,7 +56,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
         let author_name = get_name(&author);
         let mut author_books = 0;
         let mut series_amount = 0;
-        let author_id = get_id(index, 'a');
+        let author_id = lib.authors_amount + 1 ;
 
         for series in WalkDir::new(author.path().clone())
             .max_depth(1)
@@ -79,7 +68,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
             if contains_subfolders(series.path().display().to_string().as_str()) {
                 let mut series_books = 0;
                 let series_name = get_name(&series);
-                let series_id: String = get_id(index, 's');
+                let series_id: u32 = lib.series_amount + 1;
 
                 for book in WalkDir::new(series.path().clone())
                     .max_depth(1)
@@ -94,13 +83,12 @@ pub fn scan(work_dir: &str, json_path: &str) {
                         cover: get_cover_path(book.path().display().to_string()),
                         author: author_name.clone(),
                         series: series_name.clone(),
-                        id: get_id(index, 'b'),
+                        id: lib.books_amount + 1,
                         series_id: series_id.clone(),
                         author_id: author_id.clone(),
                     });
                     series_books += 1;
                     author_books += 1;
-                    index +=1;
                 }
 
                 lib.add_series(Series {
@@ -120,12 +108,11 @@ pub fn scan(work_dir: &str, json_path: &str) {
                     cover: get_cover_path(book.path().display().to_string()),
                     author: author_name.clone(),
                     series: String::new(),
-                    id: get_id(index, 'b'),
-                    series_id: "".to_string(),
+                    id: lib.books_amount + 1,
+                    series_id: 0,
                     author_id: author_id.clone(),
                 });
                 author_books += 1;
-                index +=1;
             }
         }
 
@@ -137,7 +124,6 @@ pub fn scan(work_dir: &str, json_path: &str) {
             books_amount: author_books,
             id: author_id,
         });
-        index +=1;
     }
 
     let json_data = serde_json::to_string_pretty(&lib).expect("Failed to serialize data to JSON");

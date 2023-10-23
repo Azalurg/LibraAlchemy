@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Book {
-    pub id: String,
-    pub series_id: String,
-    pub author_id: String,
+    pub id: u32,
+    pub series_id: u32,
+    pub author_id: u32,
     pub title: String,
     pub directory: String,
     pub cover: String,
@@ -15,7 +15,7 @@ pub struct Book {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Series {
-    pub id: String,
+    pub id: u32,
     pub title: String,
     pub cover: String,
     pub directory: String,
@@ -25,7 +25,7 @@ pub struct Series {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Author {
-    pub id: String,
+    pub id: u32,
     pub name: String,
     pub cover: String,
     pub directory: String,
