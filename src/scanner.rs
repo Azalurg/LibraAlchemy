@@ -42,6 +42,14 @@ fn get_name(dir: &walkdir::DirEntry) -> String {
 
 
 pub fn scan(work_dir: &str, json_path: &str) {
+    
+    if let Ok(metadata) = fs::metadata(json_path) {
+        if metadata.is_file() {
+            println!("The file '{}' exists.", json_path);
+            return;
+        }
+    }
+
     println!("Scanning: {}", work_dir);
 
     let mut lib = Library::new();

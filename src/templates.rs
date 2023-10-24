@@ -25,3 +25,17 @@ pub fn books(data: &State<Library>) -> Template {
 
     Template::render("pages/books/list", context)
 }
+
+#[get("/authors")]
+pub fn authors(data: &State<Library>) -> Template {
+    let context = to_value(&**data).expect("Failed to serialize data to JSON");
+
+    Template::render("pages/authors/list", context)
+}
+
+#[get("/series")]
+pub fn series(data: &State<Library>) -> Template {
+    let context = to_value(&**data).expect("Failed to serialize data to JSON");
+
+    Template::render("pages/series/list", context)
+}
