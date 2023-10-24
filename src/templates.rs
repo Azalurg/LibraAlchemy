@@ -8,7 +8,7 @@ use serde_json::to_value;
 pub fn index(data: &State<Library>) -> Template {
     let context = to_value(&**data).expect("Failed to serialize data to JSON");
 
-    Template::render("first", context)
+    Template::render("pages/home", context)
 }
 
 #[get("/static")]
@@ -16,4 +16,12 @@ pub fn statics(data: &State<Library>) -> Template {
     let context = to_value(&**data).expect("Failed to serialize data to JSON");
 
     Template::render("static", context)
+}
+
+
+#[get("/books")]
+pub fn books(data: &State<Library>) -> Template {
+    let context = to_value(&**data).expect("Failed to serialize data to JSON");
+
+    Template::render("pages/books/list", context)
 }

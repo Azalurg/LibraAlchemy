@@ -16,7 +16,20 @@
         <h3>Books ({{books_amount}})</h3>
         <ul class="lib">
             {{#each books}}
-            {{> books/book}}
+            <li class="lib-cell shadow">
+                {{#if cover}}
+                <img src="{{cover}}" class="lib-img" alt="{{title}}" title="{{series}} - {{title}} - {{author}}">
+                {{else}}
+                <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img"
+                    alt="{{title}}">
+                {{/if}}
+                {{#if series}}
+                <div class="lib-text lib-tex-first" title="{{series}} - {{title}}">{{series}} - {{title}}</div>
+                {{else}}
+                <div class="lib-text lib-tex-first" title="{{title}}">{{title}}</div>
+                {{/if}}
+                <div class="lib-text lib-text-second" title="{{author}}">{{author}}</div>
+            </li>
             {{/each}}
         </ul>
     </div>
@@ -25,7 +38,17 @@
         <h3 class="">Authors ({{authors_amount}})</h3>
         <ul class="lib">
             {{#each authors}}
-            {{> authors/author}}
+            <li class="lib-cell shadow">
+                {{#if cover}}
+                <img src="{{cover}}" class="lib-img" alt="{{name}}">
+                {{else}}
+                <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img"
+                    alt="{{name}}">
+                {{/if}}
+
+                <div class="lib-text lib-tex-first" title="{{name}}">{{name}}</div>
+            </li>
+
             {{/each}}
         </ul>
     </div>
@@ -34,7 +57,17 @@
         <h3 class="">Series ({{series_amount}})</h3>
         <ul class="lib">
             {{#each series}}
-            {{> series/series}}
+            <li class="lib-cell shadow">
+                {{#if cover}}
+                <img src="{{cover}}" class="lib-img" alt="{{title}}">
+                {{else}}
+                <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img"
+                    alt="{{title}}">
+                {{/if}}
+
+                <div class="lib-text lib-tex-first" title="{{title}}">{{title}}</div>
+                <div class="lib-text lib-text-second" title="{{author}}">{{author}}</div>
+            </li>
             {{/each}}
         </ul>
     </div>
@@ -65,4 +98,4 @@
 </script>
 
 {{/inline}}
-{{> index}}
+{{> components/page}}

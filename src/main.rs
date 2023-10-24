@@ -66,7 +66,7 @@ async fn main() {
 
     let _ = rocket::build()
         .manage(data)
-        .mount("/", routes![templates::index, templates::statics])
+        .mount("/", routes![templates::index, templates::statics, templates::books])
         .mount("/", routes![static_files])
         .attach(Template::fairing())
         .launch()

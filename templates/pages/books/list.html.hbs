@@ -1,0 +1,38 @@
+{{#*inline "content"}}
+
+<section class="card">
+    <h1>LibraAlchemy</h1>
+    <p>Craft your private audio library with open-source magic. Curate,
+        personalize, and transmute your collection offline, powered by alchemy.</p>
+    <div class="btn-group">
+        <a class="btn active" href="/books">Books</a>
+        <a class="btn" href="/authors">Authors</a>
+        <a class="btn" href="/series">Series</a>
+    </div>
+</section>
+
+<section style="margin-top: 4rem;">
+    <div class="container grid-container visible" id="grid1">
+        <h3>Books ({{books_amount}})</h3>
+        <ul class="lib">
+            {{#each books}}
+            <a class="lib-cell shadow">
+                {{#if cover}}
+                <img src="{{cover}}" class="lib-img" alt="{{title}}" title="{{series}} - {{title}} - {{author}}">
+                {{else}}
+                <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img" alt="{{title}}">
+                {{/if}}
+                {{#if series}}
+                <div class="lib-text lib-tex-first" title="{{series}} - {{title}}">{{series}} - {{title}}</div>
+                {{else}}
+                <div class="lib-text lib-tex-first" title="{{title}}">{{title}}</div>
+                {{/if}}
+                <div class="lib-text lib-text-second" title="{{author}}">{{author}}</div>
+            </a>
+            {{/each}}
+        </ul>
+    </div>
+</section>
+
+{{/inline}}
+{{> components/page}}
