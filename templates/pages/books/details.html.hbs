@@ -1,0 +1,49 @@
+{{#*inline "content"}}
+
+{{!-- pub struct Book {
+pub id: u32,
+pub series_id: u32,
+pub author_id: u32,
+pub title: String,
+pub directory: String,
+pub cover: String,
+pub author: String,
+pub series: String,
+} --}}
+
+<section style="min-height: calc(100vh - 80px);">
+    <h1>{{title}}</h1>
+    {{#if cover}}
+    <img src="{{cover}}" alt="{{title}}" title="{{series}} - {{title}} - {{author}}">
+    {{else}}
+    <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" alt="{{title}}">
+    {{/if}}
+
+    {{#if series}}
+    <div class="lib-text lib-tex-first" title="{{series}} - {{title}}">{{series}} - {{title}}</div>
+    {{else}}
+    <div class="lib-text lib-tex-first" title="{{title}}">{{title}}</div>
+    {{/if}}
+
+    <div class="lib-text lib-text-second" title="{{author}}">{{author}}</div>
+</section>
+
+<div class="background">
+
+</div>
+
+<style>
+    .background{
+        z-index: -1;
+        position: absolute;
+        right: 75%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        background-color: var(--color-bg-alt);
+    }
+</style>
+
+
+{{/inline}}
+{{> components/page}}

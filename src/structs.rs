@@ -1,6 +1,10 @@
 use chrono::Local;
 use serde::{Deserialize, Serialize};
 
+pub trait ID {
+    fn get_id(&self) -> u32;
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Book {
     pub id: u32,
@@ -13,6 +17,12 @@ pub struct Book {
     pub series: String,
 }
 
+impl ID for Book {
+    fn get_id(&self) -> u32 {
+        self.id
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Series {
     pub id: u32,
@@ -23,6 +33,12 @@ pub struct Series {
     pub books_amount: u32,
 }
 
+impl ID for Series {
+    fn get_id(&self) -> u32 {
+        self.id
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Author {
     pub id: u32,
@@ -31,6 +47,12 @@ pub struct Author {
     pub directory: String,
     pub series_amount: u32,
     pub books_amount: u32,
+}
+
+impl ID for Author {
+    fn get_id(&self) -> u32 {
+        self.id
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
