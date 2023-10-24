@@ -1,11 +1,11 @@
 use rocket::fs::NamedFile;
-use rocket::{routes, Rocket, get, State};
+use rocket::{get, routes, Rocket, State};
 use rocket_dyn_templates::Template;
 use serde_json;
 use std::env;
 use std::fs::File;
 use std::io::Read;
-use std::path::{PathBuf, Path};
+use std::path::{Path, PathBuf};
 
 mod scanner;
 mod structs;
@@ -59,14 +59,24 @@ async fn main() {
 
     println!("--- START ---");
 
-    scanner::scan(&work_dir.clone(), &json_path);  //  <--- For development
+    scanner::scan(&work_dir.clone(), &json_path); //  <--- For development
     let data = load_data_from_json(&json_path).unwrap();
 
     println!("--- END ---");
 
     let _ = rocket::build()
         .manage(data)
-        .mount("/", routes![templates::index, templates::statics, templates::books, templates::authors, templates::series, templates::book])
+        .mount(
+            "/",
+            routes![
+                templates::index,
+                templates::statics,
+                templates::books,
+                templates::authors,
+                templates::series,
+                templates::book
+            ],
+        )
         .mount("/", routes![static_files])
         .attach(Template::fairing())
         .launch()

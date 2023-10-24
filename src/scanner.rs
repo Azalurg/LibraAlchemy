@@ -1,7 +1,7 @@
+use rand::Rng;
 use serde_json;
 use std::fs;
 use walkdir::WalkDir;
-use rand::Rng;
 
 use crate::structs::{Author, Book, Library, Series};
 
@@ -40,9 +40,7 @@ fn get_name(dir: &walkdir::DirEntry) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_string()
 }
 
-
 pub fn scan(work_dir: &str, json_path: &str) {
-    
     if let Ok(metadata) = fs::metadata(json_path) {
         if metadata.is_file() {
             println!("The file '{}' exists.", json_path);
@@ -64,7 +62,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
         let author_name = get_name(&author);
         let mut author_books = 0;
         let mut series_amount = 0;
-        let author_id = lib.authors_amount + 1 ;
+        let author_id = lib.authors_amount + 1;
 
         for series in WalkDir::new(author.path().clone())
             .max_depth(1)
