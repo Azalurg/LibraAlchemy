@@ -5,7 +5,7 @@ pub trait ID {
     fn get_id(&self) -> u32;
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Book {
     pub id: u32,
     pub series_id: u32,
@@ -23,7 +23,7 @@ impl ID for Book {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Series {
     pub id: u32,
     pub title: String,
@@ -39,7 +39,7 @@ impl ID for Series {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Author {
     pub id: u32,
     pub name: String,

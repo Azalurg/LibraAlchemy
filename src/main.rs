@@ -74,7 +74,9 @@ async fn main() {
                 templates::books,
                 templates::authors,
                 templates::series,
-                templates::book
+                templates::book_page,
+                templates::author_page,
+                templates::series_page
             ],
         )
         .mount("/", routes![static_files])
