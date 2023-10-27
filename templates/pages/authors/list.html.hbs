@@ -16,7 +16,7 @@
         <h3>Authors ({{authors_amount}})</h3>
         <ul class="lib">
             {{#each authors}}
-            <a class="lib-cell shadow">
+            <a href="/authors/{{id}}" class="lib-cell shadow">
                 {{#if cover}}
                 <img src="{{cover}}" class="lib-img" alt="{{name}}">
                 {{else}}

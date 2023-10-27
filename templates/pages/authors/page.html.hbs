@@ -1,91 +1,25 @@
 {{#*inline "content"}}
 
-{{!-- pub struct Book {
-pub id: u32,
-pub series_id: u32,
-pub author_id: u32,
-pub title: String,
-pub directory: String,
-pub cover: String,
-pub author: String,
-pub series: String,
-} --}}
-
 <section class="display" style="min-height: calc(100vh - 80px);">
     <div class="display-image">
-    {{#if book.cover}}
-    <img src="{{book.cover}}" class="shadow" alt="{{book.title}}" title="{{book.series}} - {{book.title}} - {{book.author}}">
-    {{else}}
-    <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="shadow" alt="{{book.title}}">
-    {{/if}}
+        {{#if author.cover}}
+        <img src="{{author.cover}}" class="shadow" alt="{{author.title}}"
+            title="{{author.series}} - {{author.title}} - {{author.author}}">
+        {{else}}
+        <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="shadow"
+            alt="{{author.title}}">
+        {{/if}}
     </div>
     <div class="display-info">
-        {{#if book.series}}
-        <h1>{{book.series}} - {{book.title}}</h1>
-        {{else}}
-        <h1>{{book.title}}</h1>
-        {{/if}}
-        <table class="display-details">
-            <tr>
-                <td>Author</td>
-                <td><a href="/author/{{book.author_id}}">{{book.author}}</a></td>
-            </tr>
-            {{#if book.series}}
-            <tr>
-                <td>Series</td>
-                <td><a href="/series/{{book.series_id}}">{{book.series}}</a></td>
-            </tr>
-            {{/if}}
-        </table>
-
+        <h1>{{author.name}}</h1>
+        {{> components/books_grid}}
+        {{> components/series_grid}}
     </div>
 </section>
 
 <div class="background">
 
 </div>
-
-<style>
-    .display{
-        display: flex;
-        width: 75%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 3rem;
-    }
-
-    .display-image {
-        width: 30%;
-        max-width: 800px;
-        text-align: center;
-    }
-
-    .display-info{
-        width: 70%;
-        padding: 1rem;
-    }
-
-    .display-image >img{
-        width: 80%;
-        min-width: 10rem;
-    }
-
-    td{
-        padding: 0.5rem;
-        border-bottom: 1px solid var(--color-bg-alt);
-    }
-
-    .background {
-        z-index: -1;
-        position: fixed;
-        right: 75%;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        background-color: var(--color-bg-alt);
-    }
-</style>
-
 
 {{/inline}}
 {{> components/page}}

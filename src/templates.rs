@@ -64,19 +64,21 @@ pub fn book_page(id: u32, data: &State<Library>) -> Template {
     }
 }
 
-#[get("/author/<id>")]
+#[get("/authors/<id>")]
 pub fn author_page(id: u32, data: &State<Library>) -> Template {
     let authors = &data.authors;
 
     if let Some(author) = get_by_id(id, &authors) {
         let books = get_books_by_author(author.id, &data.books);
-        let series = get_series_by_author(author.id, &data.series, &books);
+        let series = get_series_from_books(&data.series, &books);
         let context = json!({
             "author": author,
             "series": series,
             "books": books,
             "version": data.version,
-            "last_update": data.last_update
+            "last_update": data.last_update,
+            "books_amount": books.len(),
+            "series_amount": series.len()
         });
         Template::render("pages/authors/page", context)
     } else {
@@ -105,7 +107,8 @@ pub fn series_page(id: u32, data: &State<Library>) -> Template {
                 "books": books,
                 "author": author,
                 "version": data.version,
-                "last_update": data.last_update
+                "last_update": data.last_update,
+                "books_amount": books.len(),
             });
             return Template::render("pages/series/page", context);
         } else {
@@ -137,9 +140,9 @@ fn get_books_by_author(author_id: u32, books: &Vec<Book>) -> Vec<Book> {
     books.iter().filter(|book| book.author_id == author_id).cloned().collect()
 }
 
-fn get_series_by_author(author_id: u32, series: &Vec<Series>, books: &Vec<Book>) -> Vec<Series> {
+fn get_series_from_books(series: &Vec<Series>, books: &Vec<Book>) -> Vec<Series> {
     let mut id_set = HashSet::new();
-    books.iter().map(|b| id_set.insert(b.series_id));
+    let _ = books.iter().map(|b| id_set.insert(b.series_id));
     series.iter().filter(|s| id_set.contains(&s.id)).cloned().collect()
 }
 
