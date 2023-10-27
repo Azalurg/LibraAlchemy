@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "LibraAlchemy"
-version = "0.3.2"
+version = "1.0.0"
 dependencies = [
  "chrono",
  "handlebars",

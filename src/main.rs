@@ -13,7 +13,7 @@ mod templates;
 
 use structs::Library;
 
-pub const VERSION: &str = "0.3.3";
+pub const VERSION: &str = "1.0.0";
 
 fn load_data_from_json(path: &str) -> Result<Library, Box<dyn std::error::Error>> {
     let mut file = File::open(path)?;
@@ -34,7 +34,7 @@ async fn static_files(file: PathBuf) -> Option<NamedFile> {
 async fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
     let mut work_dir = String::from(env::current_dir().unwrap().display().to_string());
-    let mut data_store = String::from("/etc/LibraAlchemy");
+    let mut data_store = String::from("/tmp/");
 
     match args.len() {
         1 => {
@@ -55,7 +55,7 @@ async fn main() {
         data_store = data_store + "/";
     }
 
-    let json_path = data_store.clone() + "data.json";
+    let json_path = data_store.clone() + "LibraAlchemy.json";
 
     println!("--- START ---");
 
