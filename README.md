@@ -2,7 +2,7 @@
 
 |   |   |
 | :--- | :---: |
-|**LibraAlchemy** is a Rust application designed to simplify the management and organization of your audiobook collection. This tool scans your library of audiobooks and generates an interactive HTML view, making it easy to visualize and access your audiobook collection. Whether you have a diverse assortment of standalone titles or a series of books from various authors, this app provides a user-friendly way to navigate through your collection.| <img src="./assets/img/screenshot.jpg" alt="HTML View" style="max-width: 100%;"> |
+|**LibraAlchemy** is a Rust application designed to simplify the management and organization of your audiobook collection. This tool scans your library of audiobooks and generates an interactive HTML view, making it easy to visualize and access your audiobook collection. Whether you have a diverse assortment of standalone titles or a series of books from various authors, this app provides a user-friendly way to navigate through your collection.| <img src="./img/screenshot.jpg" alt="HTML View" style="max-width: 100%;"> |
 
 
 ## Features
@@ -37,13 +37,13 @@ Library/
 ### Linux
 
 ```sh
-cargo build --release --features "external-templates"
+cargo build --release
 ```
 
 ### Windows
 
 ```sh
-cargo build --target x86_64-pc-windows-gnu --release --features "external-templates"
+cargo build --target x86_64-pc-windows-gnu --release
 ```
 
 ## Usage
@@ -62,23 +62,18 @@ cargo build --target x86_64-pc-windows-gnu --release --features "external-templa
 
 ## TODO - Rust
 
-- [X] Add support for `.png` and `.jpeg`
+- [ ] Fix releases
+- [ ] Add function to generate output
 - [ ] Add os recognition to make path correct
 - [ ] Add metadata support
 - [ ] Add more options like (not save json, use old json, etc.)
 - [ ] Add tests
-- [X] Add counter to json
-- [X] Adjust json structure
-- [ ] Add possibility to chose output path
-- [X] Change album to series
 - [ ] Open html in browser after generation
 
 ## TODO - HTML
 
-- [X] Fix title length
 - [ ] Set color palette
-- [ ] Switch to dark mode
-- [X] Add cards for author and series
+- [ ] Switch for dark mode
 - [ ] Create logo / graphic
 - [ ] Add footer
 - [ ] Add pagination

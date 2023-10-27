@@ -1,6 +1,6 @@
 [package]
 name = "LibraAlchemy"
-version = "0.3.0"
+version = "1.0.0"
 author = "Azalurg"
 description = "Craft your private audio library with open-source magic. Curate, personalize, and transmute your collection offline, powered by alchemy."
 license = "MIT"
@@ -9,7 +9,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chrono = "0.4.26"
 handlebars = "4.3.7"
+rand = "0.8.5"
+rocket = "=0.5.0-rc.3"
+rocket_dyn_templates = { version = "0.1.0-rc.3", features = ["handlebars"]}
 serde = { version = "1.0.183", features = ["derive"] }
 serde_json = "1.0.105"
 walkdir = "2.3.3"

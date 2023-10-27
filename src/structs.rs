@@ -1,7 +1,15 @@
+use chrono::Local;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+pub trait ID {
+    fn get_id(&self) -> u32;
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Book {
+    pub id: u32,
+    pub series_id: u32,
+    pub author_id: u32,
     pub title: String,
     pub directory: String,
     pub cover: String,
@@ -9,8 +17,15 @@ pub struct Book {
     pub series: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+impl ID for Book {
+    fn get_id(&self) -> u32 {
+        self.id
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Series {
+    pub id: u32,
     pub title: String,
     pub cover: String,
     pub directory: String,
@@ -18,13 +33,26 @@ pub struct Series {
     pub books_amount: u32,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+impl ID for Series {
+    fn get_id(&self) -> u32 {
+        self.id
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Author {
+    pub id: u32,
     pub name: String,
     pub cover: String,
     pub directory: String,
     pub series_amount: u32,
     pub books_amount: u32,
+}
+
+impl ID for Author {
+    fn get_id(&self) -> u32 {
+        self.id
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -36,10 +64,12 @@ pub struct Library {
     pub series_amount: u32,
     pub books_amount: u32,
     pub version: String,
+    pub last_update: String,
 }
 
 impl Library {
     pub fn new() -> Library {
+        let last_update = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
         Library {
             authors: Vec::new(),
             series: Vec::new(),
@@ -48,6 +78,7 @@ impl Library {
             series_amount: 0,
             books_amount: 0,
             version: String::from(format!("{}", crate::VERSION)),
+            last_update: last_update,
         }
     }
 

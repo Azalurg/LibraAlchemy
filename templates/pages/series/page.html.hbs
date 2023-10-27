@@ -1,0 +1,28 @@
+{{#*inline "content"}}
+
+<section class="display" style="min-height: calc(100vh - 80px);">
+    <div class="display-image">
+    {{#if series.cover}}
+    <img src="{{series.cover}}" class="shadow" alt="{{series.title}}" title="{{series.series}} - {{series.title}} - {{series.author}}">
+    {{else}}
+    <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="shadow" alt="{{series.title}}">
+    {{/if}}
+    </div>
+    <div class="display-info">
+        <h1>{{series.title}}</h1>
+        <table class="display-details">
+            <tr>
+                <td>Author</td>
+                <td><a href="/authors/{{series.author_id}}">{{series.author}}</a></td>
+            </tr>
+        </table>
+    </div>
+    {{> components/books_grid}}
+</section>
+
+<div class="background">
+
+</div>
+
+{{/inline}}
+{{> components/page}}
