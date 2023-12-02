@@ -1,11 +1,12 @@
+use clap::Parser;
 use rocket::fs::NamedFile;
 use rocket::{get, routes, Rocket, State};
 use rocket_dyn_templates::Template;
 use serde_json;
-use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
+use std::process::exit;
 
 mod scanner;
 mod structs;
@@ -14,6 +15,17 @@ mod templates;
 use structs::Library;
 
 pub const VERSION: &str = "1.0.0";
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[arg(short, long, default_value = "./")]
+    work_dir: String,
+    #[arg(short, long, default_value = "/tmp/")]
+    output_dir: String,
+    #[arg(short, default_value = "false")]
+    gen_static: bool,
+}
 
 fn load_data_from_json(path: &str) -> Result<Library, Box<dyn std::error::Error>> {
     let mut file = File::open(path)?;
@@ -32,20 +44,10 @@ async fn static_files(file: PathBuf) -> Option<NamedFile> {
 
 #[rocket::main]
 async fn main() {
-    let args: Vec<String> = env::args().skip(1).collect();
-    let mut work_dir = String::from(env::current_dir().unwrap().display().to_string());
-    let mut data_store = String::from("/tmp/");
+    let args = Args::parse();
 
-    match args.len() {
-        1 => {
-            work_dir = String::from(args[0].clone());
-        },
-        2 => {
-            work_dir = String::from(args[0].clone());
-            data_store = String::from(args[1].clone());
-        },
-        _ => {},
-    }
+    let mut work_dir = args.work_dir;
+    let mut data_store = args.output_dir;
 
     if work_dir.chars().last().unwrap() != '/' {
         work_dir = work_dir + "/";
@@ -61,6 +63,10 @@ async fn main() {
 
     scanner::scan(&work_dir.clone(), &json_path); //  <--- For development
     let data = load_data_from_json(&json_path).unwrap();
+
+    if args.gen_static {
+        panic!("Template generated successfully!");
+    }
 
     println!("--- END ---");
 
