@@ -20,7 +20,9 @@ pub fn series_page(id: u32, data: &State<Library>) -> Template {
         let books = get_books_by_series(s.id, &data.books);
         let author;
         if books.len() > 0 {
-            author = get_by_id(books.get(0).unwrap().author_id, &data.authors).unwrap().clone();
+            author = get_by_id(books.get(0).unwrap().author_id, &data.authors)
+                .unwrap()
+                .clone();
             let context = json!({
                 "series": s,
                 "books": books,
