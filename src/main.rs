@@ -2,15 +2,16 @@ use clap::Parser;
 use rocket::fs::NamedFile;
 use rocket::{get, routes, Rocket, State};
 use rocket_dyn_templates::Template;
+use routes::*;
 use serde_json;
 use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
-use std::process::exit;
 
+mod functions;
+mod routes;
 mod scanner;
 mod structs;
-mod templates;
 
 use structs::Library;
 
@@ -72,19 +73,10 @@ async fn main() {
 
     let _ = rocket::build()
         .manage(data)
-        .mount(
-            "/",
-            routes![
-                templates::index,
-                templates::statics,
-                templates::books,
-                templates::authors,
-                templates::series,
-                templates::book_page,
-                templates::author_page,
-                templates::series_page
-            ],
-        )
+        .mount("/", routes![public::index, public::statics])
+        .mount("/books", routes![books::books, books::book_page])
+        .mount("/series", routes![series::series, series::series_page])
+        .mount("/authors", routes![authors::authors, authors::author_page])
         .mount("/", routes![static_files])
         .attach(Template::fairing())
         .launch()
