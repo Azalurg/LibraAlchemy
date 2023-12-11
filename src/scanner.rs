@@ -75,6 +75,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
                 let mut series_books = 0;
                 let series_name = get_name(&series);
                 let series_id: u32 = lib.series_amount + 1;
+                let mut series_cover = "".to_string();
 
                 for book in WalkDir::new(series.path().clone())
                     .max_depth(1)
@@ -83,6 +84,10 @@ pub fn scan(work_dir: &str, json_path: &str) {
                     .filter_map(|e| e.ok())
                     .filter(|e| e.path().is_dir())
                 {
+                    if series_cover == "" {
+                        series_cover = get_cover_path(book.path().display().to_string());
+                    }
+
                     lib.add_book(Book {
                         title: get_name(&book),
                         directory: book.path().display().to_string(),
@@ -99,7 +104,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
 
                 lib.add_series(Series {
                     title: series_name,
-                    cover: get_cover_path(series.path().display().to_string()),
+                    cover: series_cover,
                     directory: series.path().display().to_string(),
                     author: author_name.clone(),
                     books_amount: series_books,

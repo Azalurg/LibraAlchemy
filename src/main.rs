@@ -15,7 +15,7 @@ mod structs;
 
 use structs::Library;
 
-pub const VERSION: &str = "1.0.0";
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
