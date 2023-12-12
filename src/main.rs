@@ -28,7 +28,7 @@ struct Args {
     #[arg(short, long, default_value = "/tmp/")]
     output_dir: String,
     #[arg(short, default_value = "false")]
-    gen_static: bool,
+    force_scan: bool,
 }
 
 #[derive(RustEmbed)]
@@ -75,12 +75,8 @@ async fn main() {
 
     println!("--- START ---");
 
-    scanner::scan(&work_dir.clone(), &json_path); //  <--- For development
+    scanner::scan(&work_dir.clone(), &json_path, args.force_scan); //  <--- For development
     let data = load_data_from_json(&json_path).unwrap();
-
-    if args.gen_static {
-        panic!("Template generated successfully!");
-    }
 
     println!("--- END ---");
 

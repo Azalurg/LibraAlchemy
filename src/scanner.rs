@@ -15,7 +15,7 @@ fn get_cover_path(path: String) -> String {
                 match fs::canonicalize(cover_path) {
                     Ok(full_path) => {
                         return full_path.display().to_string();
-                    }
+                    },
                     Err(e) => eprintln!("Error: {}", e),
                 }
             }
@@ -44,9 +44,9 @@ fn get_name(dir: &walkdir::DirEntry) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_string()
 }
 
-pub fn scan(work_dir: &str, json_path: &str) {
+pub fn scan(work_dir: &str, json_path: &str, force_scan: bool) {
     if let Ok(metadata) = fs::metadata(json_path) {
-        if metadata.is_file() {
+        if metadata.is_file() && !force_scan {
             println!("The file '{}' exists.", json_path);
             return;
         }

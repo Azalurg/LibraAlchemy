@@ -14,8 +14,7 @@ pub fn get_books_by_author(author_id: u32, books: &Vec<Book>) -> Vec<Book> {
 }
 
 pub fn get_series_from_books(series: &Vec<Series>, books: &Vec<Book>) -> Vec<Series> {
-    let mut id_set = HashSet::new();
-    let _ = books.iter().map(|b| id_set.insert(b.series_id));
+    let id_set = books.iter().map(|b| b.series_id).collect::<HashSet<u32>>();
     series.iter().filter(|s| id_set.contains(&s.id)).cloned().collect()
 }
 
