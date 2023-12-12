@@ -1,4 +1,3 @@
-use rand::Rng;
 use serde_json;
 use std::fs;
 use walkdir::WalkDir;
