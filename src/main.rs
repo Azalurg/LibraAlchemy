@@ -7,8 +7,8 @@ use rocket_dyn_templates::Template;
 use routes::*;
 use rust_embed::RustEmbed;
 use serde_json;
-use std::fs::File;
-use std::io::Read;
+use std::fs::{File, self};
+use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use tempfile::{tempdir};
 
@@ -48,7 +48,7 @@ fn load_data_from_json(path: &str) -> Result<Library, Box<dyn std::error::Error>
 }
 
 fn configure(path: &Path) -> Figment {
-    let mut  conf = Config::figment().merge(("port", 4000));
+    let mut  conf = Config::figment().merge(("port", 8000));
     conf = conf.merge(("template_dir", path));
     conf
 }
@@ -86,31 +86,27 @@ async fn main() {
 
     println!("--- END ---");
 
-    let dir = tempdir().unwrap();
+    let tmp_dir = tempdir().unwrap();
+    let tmp_dir_path = tmp_dir.path();
 
-    let engine = Template::custom(|engine| {
-        let regex = Regex::new(r"\.html\.hbs$").expect("Invalid regex pattern");
-        for file in Templates::iter() {
-            let name = &regex.replace_all(file.as_ref(), "");
-            let file_data = Templates::get(file.as_ref()).unwrap();
-            let file_str = std::str::from_utf8(file_data.data.as_ref()).unwrap();
-            match engine.handlebars.register_template_string(name, file_str) {
-                Ok(_) => println!("Template registered successfully: {}", name),
-                Err(e) => eprintln!("Error registering template {}: {}", name, e),
-            }
-        }
+    for file in Templates::iter() {
+        let path = tmp_dir_path.join(file.as_ref());
+        let _ = fs::create_dir_all(std::path::Path::new(&path).parent().unwrap());
+        
+        let mut tmp_file = File::create(tmp_dir_path.join(file.as_ref())).unwrap();
+        let file_content = Templates::get(file.as_ref()).unwrap();
+        tmp_file.write_all(file_content.data.as_ref()).unwrap();
+    }
 
-    });
-
-    let _ = rocket::custom(configure(dir.path()))
+    let _ = rocket::custom(configure(tmp_dir_path))
         .manage(data)
-        .manage(dir)
+        .manage(tmp_dir)
         .mount("/", routes![public::index])
         .mount("/books", routes![books::books, books::book_page])
         .mount("/series", routes![series::series, series::series_page])
         .mount("/authors", routes![authors::authors, authors::author_page])
         .mount("/", routes![static_files])
-        .attach(engine)
+        .attach(Template::fairing())
         .launch()
         .await;
 }
