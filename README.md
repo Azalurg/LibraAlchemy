@@ -1,15 +1,14 @@
-# **LibraAlchemy**
+# LibraAlchemy
 
-|   |   |
-| :--- | :---: |
-|**LibraAlchemy** is a Rust application designed to simplify the management and organization of your audiobook collection. This tool scans your library of audiobooks and generates an interactive HTML view, making it easy to visualize and access your audiobook collection. Whether you have a diverse assortment of standalone titles or a series of books from various authors, this app provides a user-friendly way to navigate through your collection.| <img src="./img/screenshot.jpg" alt="HTML View" style="max-width: 100%;"> |
+<img src="./img/screenshot.jpg" alt="HTML View" align="right" width= "300px"> 
 
+**LibraAlchemy** is a Rust application designed to simplify the management and organization of your audiobook collection. This tool scans your library of audiobooks and generates an interactive HTML view, making it easy to visualize and access your audiobook collection. Whether you have a diverse assortment of standalone titles or a series of books from various authors, this app provides a user-friendly way to navigate through your collection.
 
 ## Features
 
-**Library Scanning**: The application recursively scans the specified directory for audiobooks in the supported formats (.mp3) and their associated cover images in formats (.jpg, .jpeg, .png).
+**Library Scanning**: The application recursively scans the specified directory for audiobooks in the supported formats (.mp3) and their associated cover images in formats (check [src/scanner.rc](https://github.com/Azalurg/LibraAlchemy/master/src/scanner.rs) line 8).
 
-**HTML Generation**: After scanning, the app generates an HTML view that displays the audiobooks in an organized and visually appealing format. The view includes book covers, author and series information (if available), and clickable links to play the audiobooks.
+**Rocket Server**: After scan, the app runs Rocket server that serves views form predefined templates, filling them with books data form your library. The views include list of all books, authors and series, as well as detail page for each of them.
 
 ## File Structure
 
@@ -36,28 +35,31 @@ Library/
 
 ### Linux
 
-```sh
+```bash
 cargo build --release
 ```
 
 ### Windows
 
-```sh
+```bash
 cargo build --target x86_64-pc-windows-gnu --release
 ```
 
 ## Usage
 
-### Linux
+### Available args
 
-```sh
-./target/release/audio-lib <path-to-library>
-```
+| arg | type | default value | description |
+| :-: | :---: | :----------: | :---------: |
+| -w, --work-dir | string | . | specify where your library is located |
+| -o, --output-dir | string | . | specify where your database should be saved |
+| -s, --save-json | bool | false | if active, saves your database to `output-dir` |
+| -f, -force_scan | bool | false | if active, scan your library even if database is present |
 
-### Windows
+### Examples
 
-```sh
-.\target\release\audio-lib.exe <path-to-library>
+```bash
+./libra_alchemy --work-dir /path/to/library --output-dir /path/to/save/db -s -f
 ```
 
 ## TODO - Rust
@@ -66,16 +68,16 @@ cargo build --target x86_64-pc-windows-gnu --release
 - [ ] Add function to generate output
 - [ ] Add os recognition to make path correct
 - [ ] Add metadata support
-- [ ] Add more options like (not save json, use old json, etc.)
+- [X] Add more options like (not save json, use old json, etc.)
 - [ ] Add tests
 - [ ] Open html in browser after generation
 
 ## TODO - HTML
 
-- [ ] Set color palette
-- [ ] Switch for dark mode
+- [X] Set color palette
+- [X] Switch for dark mode
 - [ ] Create logo / graphic
-- [ ] Add footer
+- [X] Add footer
 - [ ] Add pagination
 
 ## License
