@@ -1,5 +1,5 @@
 use serde_json;
-use std::fs;
+use std::{fs, path::Path};
 use walkdir::WalkDir;
 
 use crate::structs::{Author, Book, Library, Series};
@@ -44,15 +44,15 @@ fn get_name(dir: &walkdir::DirEntry) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_string()
 }
 
-pub fn scan(work_dir: &str, json_path: &str, force_scan: bool) {
+pub fn scan(work_dir: &Path, json_path: &Path, force_scan: bool) {
     if let Ok(metadata) = fs::metadata(json_path) {
         if metadata.is_file() && !force_scan {
-            println!("The file '{}' exists.", json_path);
+            println!("The file '{}' exists.", json_path.display());
             return;
         }
     }
 
-    println!("Scanning: {}", work_dir);
+    println!("Scanning: {}", work_dir.display());
 
     let mut lib = Library::new();
 
@@ -143,6 +143,5 @@ pub fn scan(work_dir: &str, json_path: &str, force_scan: bool) {
 
     let json_data = serde_json::to_string_pretty(&lib).expect("Failed to serialize data to JSON");
     std::fs::write(json_path, json_data).expect("Failed to write JSON data to file");
-    print!("JSON data saved to: {}", json_path);
-    println!("Scanning complied");
+    println!("Saving data to: {}", json_path.display());
 }

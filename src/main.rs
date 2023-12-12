@@ -23,10 +23,12 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    #[arg(short, long, default_value = "./")]
+    #[arg(short, long, default_value = ".")]
     work_dir: String,
-    #[arg(short, long, default_value = "/tmp/")]
+    #[arg(short, long, default_value = ".")]
     output_dir: String,
+    #[arg(short, long, default_value = "false")]
+    save_json: bool,
     #[arg(short, default_value = "false")]
     force_scan: bool,
 }
@@ -35,7 +37,7 @@ struct Args {
 #[folder = "templates/"]
 struct Templates;
 
-fn load_data_from_json(path: &str) -> Result<Library, Box<dyn std::error::Error>> {
+fn load_data_from_json(path: &Path) -> Result<Library, Box<dyn std::error::Error>> {
     let mut file = File::open(path)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
@@ -58,30 +60,19 @@ async fn static_files(file: PathBuf) -> Option<NamedFile> {
 
 #[rocket::main]
 async fn main() {
+    println!("Libra Alchemy v{}", VERSION);
+
     let args = Args::parse();
-
-    let mut work_dir = args.work_dir;
-    let mut data_store = args.output_dir;
-
-    if work_dir.chars().last().unwrap() != '/' {
-        work_dir = work_dir + "/";
-    }
-
-    if data_store.chars().last().unwrap() != '/' {
-        data_store = data_store + "/";
-    }
-
-    let json_path = data_store.clone() + "LibraAlchemy.json";
-
-    println!("--- START ---");
-
-    scanner::scan(&work_dir.clone(), &json_path, args.force_scan); //  <--- For development
-    let data = load_data_from_json(&json_path).unwrap();
-
-    println!("--- END ---");
-
     let tmp_dir = tempdir().unwrap();
     let tmp_dir_path = tmp_dir.path();
+    let mut json_path = tmp_dir_path.join("libra_alchemy.json");
+
+    if args.save_json {
+        json_path = Path::new(&args.output_dir).join("libra_alchemy.json");
+    }
+
+    // Copy templates to tmp_dir
+    println!("Copying templates to tmp_dir");
 
     for file in Templates::iter() {
         let path = tmp_dir_path.join(file.as_ref());
@@ -91,6 +82,13 @@ async fn main() {
         let file_content = Templates::get(file.as_ref()).unwrap();
         tmp_file.write_all(file_content.data.as_ref()).unwrap();
     }
+
+    // Scan
+    scanner::scan(&Path::new(&args.work_dir), &json_path, args.force_scan);
+    let data = load_data_from_json(&json_path).unwrap();
+
+    // Run Rocket
+    println!("Running Rocket Server");
 
     let _ = rocket::custom(configure(tmp_dir_path))
         .manage(data)
