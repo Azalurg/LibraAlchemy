@@ -5,7 +5,7 @@
             {{#each books}}
             <a class="lib-cell shadow" href="/books/{{id}}">
                 {{#if cover}}
-                <img src="{{cover}}" class="lib-img" alt="{{title}}" title="{{series}} - {{title}} - {{author}}">
+                <img src="/static/{{cover}}" class="lib-img" alt="{{title}}" title="{{series}} - {{title}} - {{author}}">
                 {{else}}
                 <img src="https://raw.githubusercontent.com/Azalurg/ShadowTube/master/images/128.png" class="lib-img" alt="{{title}}">
                 {{/if}}

@@ -63,6 +63,7 @@ async fn main() {
     println!("Libra Alchemy v{}", VERSION);
 
     let args = Args::parse();
+    let work_dir = Path::new(&args.work_dir);
     let tmp_dir = tempdir().unwrap();
     let tmp_dir_path = tmp_dir.path();
     let mut json_path = tmp_dir_path.join("libra_alchemy.json");
@@ -84,7 +85,7 @@ async fn main() {
     }
 
     // Scan
-    scanner::scan(&Path::new(&args.work_dir), &json_path, args.force_scan);
+    scanner::scan(work_dir, &json_path, args.force_scan);
     let data = load_data_from_json(&json_path).unwrap();
 
     // Run Rocket
@@ -97,7 +98,8 @@ async fn main() {
         .mount("/books", routes![books::books, books::book_page])
         .mount("/series", routes![series::series, series::series_page])
         .mount("/authors", routes![authors::authors, authors::author_page])
-        .mount("/", routes![static_files])
+        .mount("/static", rocket::fs::FileServer::from(work_dir))
+        // .mount("/", routes![static_files])
         .attach(Template::fairing())
         .launch()
         .await;

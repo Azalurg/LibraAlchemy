@@ -1,6 +1,6 @@
 [package]
 name = "libra_alchemy"
-version = "1.2.0"
+version = "1.2.1"
 author = "Azalurg"
 description = "Craft your private audio library with open-source magic. Curate, personalize, and transmute your collection offline, powered by alchemy."
 license = "MIT"

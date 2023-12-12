@@ -4,20 +4,16 @@ use walkdir::WalkDir;
 
 use crate::structs::{Author, Book, Library, Series};
 
-fn get_cover_path(path: String) -> String {
+fn get_cover_path(path: &Path, prefix: &Path) -> String {
     let exts = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".nfo"];
     let names = ["cover", "folder", "album", "poster", "default", "art"];
 
     for ext in exts.iter() {
         for name in names.iter() {
-            let cover_path = path.clone() + "/" + name + ext;
-            if fs::metadata(&cover_path).is_ok() {
-                match fs::canonicalize(cover_path) {
-                    Ok(full_path) => {
-                        return full_path.display().to_string();
-                    },
-                    Err(e) => eprintln!("Error: {}", e),
-                }
+            let file_name = name.to_string() + ext;
+            let cover_path = path.join(Path::new(&file_name));
+            if cover_path.exists() {
+                return cover_path.strip_prefix(prefix).unwrap().display().to_string();
             }
         }
     }
@@ -89,13 +85,13 @@ pub fn scan(work_dir: &Path, json_path: &Path, force_scan: bool) {
                     .filter(|e| e.path().is_dir())
                 {
                     if series_cover == "" {
-                        series_cover = get_cover_path(book.path().display().to_string());
+                        series_cover = get_cover_path(book.path(), work_dir);
                     }
 
                     lib.add_book(Book {
                         title: get_name(&book),
                         directory: book.path().display().to_string(),
-                        cover: get_cover_path(book.path().display().to_string()),
+                        cover: get_cover_path(book.path(), work_dir),
                         author: author_name.clone(),
                         series: series_name.clone(),
                         id: lib.books_amount + 1,
@@ -120,7 +116,7 @@ pub fn scan(work_dir: &Path, json_path: &Path, force_scan: bool) {
                 lib.add_book(Book {
                     title: get_name(&book),
                     directory: book.path().display().to_string(),
-                    cover: get_cover_path(book.path().display().to_string()),
+                    cover: get_cover_path(book.path(), work_dir),
                     author: author_name.clone(),
                     series: String::new(),
                     id: lib.books_amount + 1,
@@ -133,7 +129,7 @@ pub fn scan(work_dir: &Path, json_path: &Path, force_scan: bool) {
 
         lib.add_author(Author {
             name: author_name,
-            cover: get_cover_path(author.path().display().to_string()),
+            cover: get_cover_path(author.path(), work_dir),
             directory: author.path().display().to_string(),
             series_amount: series_amount,
             books_amount: author_books,
