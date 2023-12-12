@@ -12,7 +12,12 @@ fn get_cover_path(path: String) -> String {
         for name in names.iter() {
             let cover_path = path.clone() + "/" + name + ext;
             if fs::metadata(&cover_path).is_ok() {
-                return cover_path;
+                match fs::canonicalize(cover_path) {
+                    Ok(full_path) => {
+                        return full_path.display().to_string();
+                    }
+                    Err(e) => eprintln!("Error: {}", e),
+                }
             }
         }
     }
