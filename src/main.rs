@@ -1,17 +1,15 @@
 use clap::Parser;
-use regex::Regex;
 use rocket::figment::Figment;
 use rocket::fs::NamedFile;
-use rocket::{get, routes, Rocket, State, Config};
+use rocket::{get, routes, Config};
 use rocket_dyn_templates::Template;
 use routes::*;
 use rust_embed::RustEmbed;
 use serde_json;
-use std::fs::{File, self};
+use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
-use tempfile::{tempdir};
-
+use tempfile::tempdir;
 
 mod functions;
 mod routes;
@@ -48,7 +46,7 @@ fn load_data_from_json(path: &str) -> Result<Library, Box<dyn std::error::Error>
 }
 
 fn configure(path: &Path) -> Figment {
-    let mut  conf = Config::figment().merge(("port", 8000));
+    let mut conf = Config::figment().merge(("port", 8000));
     conf = conf.merge(("template_dir", path));
     conf
 }
@@ -92,7 +90,7 @@ async fn main() {
     for file in Templates::iter() {
         let path = tmp_dir_path.join(file.as_ref());
         let _ = fs::create_dir_all(std::path::Path::new(&path).parent().unwrap());
-        
+
         let mut tmp_file = File::create(tmp_dir_path.join(file.as_ref())).unwrap();
         let file_content = Templates::get(file.as_ref()).unwrap();
         tmp_file.write_all(file_content.data.as_ref()).unwrap();

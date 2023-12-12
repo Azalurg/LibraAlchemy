@@ -3,23 +3,6 @@
 version = 3
 
 [[package]]
-name = "LibraAlchemy"
-version = "1.1.0"
-dependencies = [
- "chrono",
- "clap",
- "rand",
- "regex",
- "rocket",
- "rocket_dyn_templates",
- "rust-embed",
- "serde",
- "serde_json",
- "tempfile",
- "walkdir",
-]
-
-[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -830,6 +813,23 @@ name = "libc"
 version = "0.2.151"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "302d7ab3130588088d277783b1e2d2e10c9e9e4a16dd9050e6ec93fb3e7048f4"
+
+[[package]]
+name = "libra_alchemy"
+version = "1.1.0"
+dependencies = [
+ "chrono",
+ "clap",
+ "rand",
+ "regex",
+ "rocket",
+ "rocket_dyn_templates",
+ "rust-embed",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "walkdir",
+]
 
 [[package]]
 name = "linux-raw-sys"
