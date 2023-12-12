@@ -1,6 +1,5 @@
-use rand::Rng;
 use serde_json;
-use std::fs;
+use std::{fs, path::Path};
 use walkdir::WalkDir;
 
 use crate::structs::{Author, Book, Library, Series};
@@ -13,7 +12,12 @@ fn get_cover_path(path: String) -> String {
         for name in names.iter() {
             let cover_path = path.clone() + "/" + name + ext;
             if fs::metadata(&cover_path).is_ok() {
-                return cover_path;
+                match fs::canonicalize(cover_path) {
+                    Ok(full_path) => {
+                        return full_path.display().to_string();
+                    },
+                    Err(e) => eprintln!("Error: {}", e),
+                }
             }
         }
     }
@@ -40,15 +44,15 @@ fn get_name(dir: &walkdir::DirEntry) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_string()
 }
 
-pub fn scan(work_dir: &str, json_path: &str) {
+pub fn scan(work_dir: &Path, json_path: &Path, force_scan: bool) {
     if let Ok(metadata) = fs::metadata(json_path) {
-        if metadata.is_file() {
-            println!("The file '{}' exists.", json_path);
+        if metadata.is_file() && !force_scan {
+            println!("The file '{}' exists.", json_path.display());
             return;
         }
     }
 
-    println!("Scanning: {}", work_dir);
+    println!("Scanning: {}", work_dir.display());
 
     let mut lib = Library::new();
 
@@ -75,6 +79,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
                 let mut series_books = 0;
                 let series_name = get_name(&series);
                 let series_id: u32 = lib.series_amount + 1;
+                let mut series_cover = "".to_string();
 
                 for book in WalkDir::new(series.path().clone())
                     .max_depth(1)
@@ -83,6 +88,10 @@ pub fn scan(work_dir: &str, json_path: &str) {
                     .filter_map(|e| e.ok())
                     .filter(|e| e.path().is_dir())
                 {
+                    if series_cover == "" {
+                        series_cover = get_cover_path(book.path().display().to_string());
+                    }
+
                     lib.add_book(Book {
                         title: get_name(&book),
                         directory: book.path().display().to_string(),
@@ -99,7 +108,7 @@ pub fn scan(work_dir: &str, json_path: &str) {
 
                 lib.add_series(Series {
                     title: series_name,
-                    cover: get_cover_path(series.path().display().to_string()),
+                    cover: series_cover,
                     directory: series.path().display().to_string(),
                     author: author_name.clone(),
                     books_amount: series_books,
@@ -134,6 +143,5 @@ pub fn scan(work_dir: &str, json_path: &str) {
 
     let json_data = serde_json::to_string_pretty(&lib).expect("Failed to serialize data to JSON");
     std::fs::write(json_path, json_data).expect("Failed to write JSON data to file");
-    print!("JSON data saved to: {}", json_path);
-    println!("Scanning complied");
+    println!("Saving data to: {}", json_path.display());
 }
