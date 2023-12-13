@@ -33,6 +33,7 @@ struct Args {
     force_scan: bool,
 }
 
+#[cfg(not(debug_assertions))]
 #[derive(RustEmbed)]
 #[folder = "templates/"]
 struct Templates;
@@ -53,11 +54,6 @@ fn configure(path: &Path) -> Figment {
     conf
 }
 
-#[get("/<file..>", rank = 10)]
-async fn static_files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("/").join(file)).await.ok()
-}
-
 #[rocket::main]
 async fn main() {
     println!("Libra Alchemy v{}", VERSION);
@@ -73,12 +69,12 @@ async fn main() {
     }
 
     // Copy templates to tmp_dir
-    println!("Copying templates to tmp_dir");
-
+    
+    #[cfg(not(debug_assertions))]
     for file in Templates::iter() {
+        println!("Copying templates to tmp_dir");
         let path = tmp_dir_path.join(file.as_ref());
         let _ = fs::create_dir_all(std::path::Path::new(&path).parent().unwrap());
-
         let mut tmp_file = File::create(tmp_dir_path.join(file.as_ref())).unwrap();
         let file_content = Templates::get(file.as_ref()).unwrap();
         tmp_file.write_all(file_content.data.as_ref()).unwrap();
@@ -91,6 +87,9 @@ async fn main() {
     // Run Rocket
     println!("Running Rocket Server");
 
+    #[cfg(debug_assertions)]
+    let tmp_dir_path = Path::new("templates");
+
     let _ = rocket::custom(configure(tmp_dir_path))
         .manage(data)
         .manage(tmp_dir)
@@ -99,7 +98,6 @@ async fn main() {
         .mount("/series", routes![series::series, series::series_page])
         .mount("/authors", routes![authors::authors, authors::author_page])
         .mount("/static", rocket::fs::FileServer::from(work_dir))
-        // .mount("/", routes![static_files])
         .attach(Template::fairing())
         .launch()
         .await;
